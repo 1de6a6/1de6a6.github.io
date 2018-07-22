@@ -1,0 +1,35 @@
+<html>
+<head>
+<link rel="stylesheet" href="./semantic.min.css">
+<link rel="stylesheet" href="./components/menu.min.css">
+<link rel="stylesheet" href="./components/dropdown.min.css">
+</head>
+<body>
+<div class="ui massive menu">
+  <a class="active item">
+    <img src="./security-shield-lock-512.png"></img>
+  </a>
+    <h1 style="margin:auto">token-liquidity.io</h1>
+  <div class="right menu">
+    <div class="ui dropdown item">
+      Language <i class="dropdown icon"></i>
+      <div class="menu">
+        <a class="item">English</a>
+        <a class="item">Russian</a>
+        <a class="item">Spanish</a>
+      </div>
+    </div>
+    <div class="item">
+        <div class="ui primary button">Unlock Metamask</div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
+<script src="./semantic.min.js"></script>
+<script src="./components/dropdown.min.js"></script>
+<script>
+$('.ui.dropdown')
+  .dropdown();
+</script>
+</body>
+</html>
