@@ -26,22 +26,16 @@ function getTradedToken(address) {
   });  
 }  
   
-function get(url) {
-  return new Promise((resolve,reject) => {
-    $.get(url).always(function(body,err) {
-      console.log(body,err);
-      if(!err) {
-        resolve(body);
-      } else {
-          reject(err);
-      }
-    });  
-  });
+function getInternalTxs(url) {
+  $.get(url).done(function(body) {
+    console.log(body);
+    return body;
+  });  
 }  
 async function loadContract() {
   let blockNumber = await getBlockNumber();
   let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
-  console.log(await get(url));
+  console.log(await getInternalTxs(url));
 }
  
 $(document).ready(function() {
