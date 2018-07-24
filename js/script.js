@@ -28,7 +28,7 @@ function getTradedToken(address) {
   
 function get(url) {
   return new Promise((resolve,reject) => {
-    $.get(url, function(body,err) {
+    $.get(url).always(function(body,err) {
       console.log(body,err);
       if(!err) {
         resolve(body);
