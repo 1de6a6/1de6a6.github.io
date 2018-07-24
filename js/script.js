@@ -57,8 +57,10 @@ async function loadSearch() {
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
     let searchObject = {'title':name};
+    console.log(searchObject);
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
+      console.log(categoryContent);
       $('.ui.search')
         .search({
           source: categoryContent
