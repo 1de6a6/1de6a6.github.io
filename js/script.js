@@ -43,7 +43,7 @@ function getTradedToken(address) {
 async function loadInternalTxs() {
   let blockNumber = await blockNumber();
   let internalTxs = await getInternalTxs(blockNumber);
-  internalTxs.forEach(function(entry) {
+  internalTxs.forEach(async function(entry) {
     let txs = await getTradedToken(entry);
     let contractAddress = txs.contractAddress;
     console.log(contractAddress);
