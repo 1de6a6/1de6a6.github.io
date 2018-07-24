@@ -46,9 +46,9 @@ async function loadInternalTxs() {
   console.log(internalTxs);
   for(let i in internalTxs) {
     let entry = internalTxs[i];
+    console.log(entry);
     let contractAddress = entry.contractAddress;
-    let tradedToken = await getTradedToken(contractAddress);
-    console.log(tradedToken);
+    console.log(contractAddress);
   }
 }
 
