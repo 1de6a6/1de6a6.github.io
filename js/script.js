@@ -3,6 +3,7 @@ const liquidityContractABI = JSON.parse('[{"constant":false,"inputs":[],"name":"
 function getBlockNumber() {
   return new Promise((resolve,reject) => {
     web3.eth.getBlockNumber(function(err, blockNumber) {
+      console.log(err,blockNumber);
       if(!err) {
         resolve(blockNumber); 
       } else {
@@ -44,7 +45,6 @@ function getTradedToken(address) {
 async function loadInternalTxs() {
   let blockNumber = await getBlockNumber();
   let internalTxs = await getInternalTxs(blockNumber);
-  console.log(internalTxs);
 }
 
 $(document).ready(function() {
