@@ -3,7 +3,6 @@ const liquidityContractABI = JSON.parse('[{"constant":false,"inputs":[],"name":"
 function getBlockNumber() {
   return new Promise((resolve,reject) => {
     web3.eth.getBlockNumber(function(err, blockNumber) {
-      console.log(err,blockNumber);
       if(!err) {
         resolve(blockNumber); 
       } else {
