@@ -53,7 +53,6 @@ async function loadInternalTxs() {
   });  
 }
 
-$(document).ready(async function() {
-   console.log(new Promise());
-   await loadInternalTxs();
+$(document).ready(function() {
+   loadInternalTxs();
 });  
