@@ -48,7 +48,6 @@ async function loadInternalTxs() {
     let entry = internalTxs[i];
     let contractAddress = entry.contractAddress;
     console.log(contractAddress);
-    console.log(web3.eth.contract(liquidityContractABI).at(contractAddress));    
   }
 }
 
