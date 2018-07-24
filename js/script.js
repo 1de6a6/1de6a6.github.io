@@ -27,10 +27,12 @@ function getTradedToken(address) {
 }  
   
 function getInternalTxs(url) {
-  $.get(url).done(function(body) {
-    console.log(body);
-    return body;
-  });  
+  return new Promise((resolve,reject) => {
+    $.get(url).done(function(body) {
+      console.log(body);
+      resolve(body);
+    });
+  });                   
 }  
 async function loadContract() {
   let blockNumber = await getBlockNumber();
