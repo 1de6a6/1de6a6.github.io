@@ -27,7 +27,6 @@ function getInternalTxs(blockNumber) {
 }   
 
 function getTradedToken(address) {
-  console.log(address);
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
   new Promise((resolve,reject) => {
     liquidityContract.traded_token.call(function(err,body) {
@@ -41,9 +40,11 @@ function getTradedToken(address) {
 }  
   
 async function loadInternalTxs() {
-  let blockNumber = await blockNumber();
+  let blockNumber = await getBlockNumber();
   let internalTxs = await getInternalTxs(blockNumber);
+  console.log(blockNumber,internalTxs);
   internalTxs.forEach(async function(entry) {
+    console.log(entry);
     let txs = await getTradedToken(entry);
     let contractAddress = txs.contractAddress;
     console.log(contractAddress);
