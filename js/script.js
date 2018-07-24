@@ -43,8 +43,7 @@ function getTradedToken(address) {
   
 async function loadContract() {
   let blockNumber = await getBlockNumber();
-  let internalTxs = await getInternalTxs(blockNumber);
-  console.log(blockNumber,internalTxs);
+  console.log(blockNumber);
 }
  
 $(document).ready(function() {
