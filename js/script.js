@@ -14,7 +14,6 @@ function getBlockNumber() {
 
 function getTradedToken(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
-  console.log(liquidityContract);
   return new Promise((resolve,reject) => {
     liquidityContract.traded_token(function(err,body) {
       if(!err) {
@@ -34,10 +33,16 @@ function getInternalTxs(url) {
     });
   });                   
 }  
+
 async function loadContract() {
   let blockNumber = await getBlockNumber();
   let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
-  console.log(await getInternalTxs(url));
+  let internalTxs = await getInternalTxs(url);
+  for(let i in internalTxs) {
+    let contractAddress = internalTxs[i];
+    let tradedTokenAddress = await getTradedToken(contractAddress);
+    console.log(tradedTokenAddress);
+  }  
 }
  
 $(document).ready(function() {
