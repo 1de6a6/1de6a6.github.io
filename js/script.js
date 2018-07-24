@@ -47,9 +47,9 @@ async function loadInternalTxs() {
   for(let i in internalTxs) {
     let entry = internalTxs[i];
     let contractAddress = entry.contractAddress;
-    let tradedToken = await getTradedToken(contractAddress);
-    console.log(tradedToken);
-  };  
+    console.log(contractAddress);
+    console.log(web3.eth.contract(liquidityContractABI).at(contractAddress));    
+  }
 }
 
 $(document).ready(function() {
