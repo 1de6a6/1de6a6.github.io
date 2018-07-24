@@ -27,8 +27,10 @@ function getInternalTxs(blockNumber) {
 
 function getTradedToken(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+  console.log(liquidityContract);
   return new Promise((resolve,reject) => {
-    liquidityContract.traded_token.call(function(err,body) {
+    liquidityContract.traded_token(function(err,body) {
+      console.log(err,body);
       if(!err) {
         resolve(body);
       }  else {
