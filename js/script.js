@@ -66,6 +66,7 @@ async function getCategoryContent() {
  
 $(document).ready(async function() {
    let categoryContent = await getCategoryContent();
+   console.log(categoryContent);
    $('.ui.search')
      .search({
        type: 'category',
