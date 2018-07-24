@@ -44,12 +44,6 @@ async function loadInternalTxs() {
   let blockNumber = await getBlockNumber();
   let internalTxs = await getInternalTxs(blockNumber);
   console.log(internalTxs);
-  for(let i in internalTxs) {
-    let entry = internalTxs[i];
-    console.log(entry);
-    let contractAddress = entry.contractAddress;
-    console.log(contractAddress);
-  }
 }
 
 $(document).ready(function() {
