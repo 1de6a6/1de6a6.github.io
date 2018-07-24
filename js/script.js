@@ -3,6 +3,7 @@ const liquidityContractABI = [{"constant":false,"inputs":[],"name":"reactivate_t
 function getBlockNumber() {
   return new Promise((resolve,reject) => {
     web3.eth.getBlockNumber(function(err, blockNumber) {
+      console.log(err,blockNumber);
       if(!err) {
         resolve(blockNumber); 
       } else {
