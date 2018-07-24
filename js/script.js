@@ -17,8 +17,7 @@ function getInternalTxs(blockNumber) {
   return new Promise((resolve,reject) => {
     $.get(url, function(body,err) {
       if(!err) {
-        console.log(body);
-        resolve(body['result']); 
+        resolve(body); 
       } else {
           reject(err);
       }
@@ -31,7 +30,6 @@ function getTradedToken(address) {
   console.log(liquidityContract);
   return new Promise((resolve,reject) => {
     liquidityContract.traded_token(function(err,body) {
-      console.log(err,body);
       if(!err) {
         resolve(body);
       }  else {
@@ -43,7 +41,8 @@ function getTradedToken(address) {
   
 async function loadContract() {
   let blockNumber = await getBlockNumber();
-  console.log(blockNumber);
+  let internalTxs = await getInternalTxs(blockNumber);
+  console.log(internalTxs);
 }
  
 $(document).ready(function() {
