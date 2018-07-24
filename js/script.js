@@ -17,6 +17,7 @@ function getInternalTxs(blockNumber) {
   return new Promise((resolve,reject) => {
     $.get(url, function(body,err) {
       if(!err) {
+        console.log(body);
         resolve(body['result']); 
       } else {
           reject(err);
