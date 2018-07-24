@@ -41,6 +41,7 @@ function getTradedToken(address) {
   
 async function loadInternalTxs() {
   let blockNumber = await getBlockNumber();
+  console.log(blockNumber);
   let internalTxs = await getInternalTxs(blockNumber);
   console.log(blockNumber,internalTxs);
   internalTxs.forEach(async function(entry) {
