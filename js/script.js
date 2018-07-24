@@ -12,19 +12,6 @@ function getBlockNumber() {
   });  
 }  
 
-function getInternalTxs(blockNumber) {
-  let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
-  return new Promise((resolve,reject) => {
-    $.get(url, function(body,err) {
-      if(!err) {
-        resolve(body); 
-      } else {
-          reject(err);
-      }
-    });
-  });  
-}   
-
 function getTradedToken(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
   console.log(liquidityContract);
@@ -41,8 +28,8 @@ function getTradedToken(address) {
   
 async function loadContract() {
   let blockNumber = await getBlockNumber();
-  let internalTxs = await getInternalTxs(blockNumber);
-  console.log(internalTxs);
+  let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+  console.log(url);
 }
  
 $(document).ready(function() {
