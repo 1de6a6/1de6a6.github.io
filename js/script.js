@@ -56,16 +56,15 @@ async function loadSearch() {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
-    let searchObject = {'category':name,'title':tradedTokenAddress};
+    let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
-      console.log(categoryContent);
       $('.ui.search')
         .search({
-          type: 'category',
           source: categoryContent
         })
     }  
+    localStorage.setItem(name,tradedTokenAddress);    
   }
 }
  
