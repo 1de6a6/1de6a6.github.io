@@ -27,11 +27,5 @@ function getInternalTxs(blockNumber) {
 }   
 
   
-async function loadInternalTxs() {
-  let blockNumber = await getBlockNumber();
-  let internalTxs = await getInternalTxs(blockNumber);
-}
-
 $(document).ready(function() {
-   loadInternalTxs();
 });  
