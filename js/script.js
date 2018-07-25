@@ -106,7 +106,12 @@ function initButtonClick() {
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
-    console.log(html.previousSibling.previousSibling.previousSibling);
+    let contractAddress = $(html.previousSibling.previousSibling.previousSibling).text();
+    let tradedTokenAddress = await getTradedToken(contractAddress);   
+    let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
+    let tradeAmount;
+    tradeType === "Buy" ? tradeAmount = inputValue : inputValue *= Math.pow(10,tokenDecimals);
+    console.log(tradeType);
   });
 }  
 
