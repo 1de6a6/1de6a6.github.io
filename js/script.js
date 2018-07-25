@@ -124,7 +124,7 @@ async function loadContractInformation(arr) {
     commission = (parseInt(commission)/1e18).toString() + " %";
     let admin = await getAdmin(contractAddress);
     let ethVolume = await get24HourVolumeETH(contractAddress);
-    let tokenVolume = await get24HourVolumeETH(contractAddress);
+    let tokenVolume = await get24HourVolumeToken(contractAddress);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + 0 + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
     $(query).append(rowHTML);
   }  
