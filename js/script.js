@@ -92,7 +92,8 @@ function loadContractInformation(arr) {
   let query = 'body > div:nth-child(4) > div > table';
   for(let i in arr) {
     let contractAddress = arr[i];
-    let commission = (parseInt(await getCommission(contractAddress))/1e18).toString() + " %";
+    let commission = await getCommission(contractAddress);
+    commission = (parseInt(commission)/1e18).toString() + " %";
     let admin = await getAdmin();
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + + "</td><td>" + commission + "</td><td>" + + "</td></tr>";
     console.log(rowHTML);
