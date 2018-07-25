@@ -47,11 +47,12 @@ function getTokenName(address) {
   });  
 }  
 
-function initSearch(array)
+function initSearch(array) {
       $('.ui.search')
         .search({
           source: array
         })
+}  
 
 function initSearchClickListener() {
   $('body > div.left-container > div > div > div.results.transition.visible > a > div')
