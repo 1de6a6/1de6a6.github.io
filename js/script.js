@@ -169,12 +169,11 @@ async function loadSearch() {
     }
     typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
   }
-  return {categoryContent, contractsObject};
+  initSearch(categoryContent);
+  localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
+  initSearchClickListener();  
 }
  
-$(document).ready(async function() {
-  let objects = await loadSearch();
-  initSearch(objects.categoryContent);
-  localStorage.setItem("tableInformation",JSON.stringify(objects.contractsObject));
-  initSearchClickListener();
+$(document).ready(function() {
+  loadSearch();
 });  
