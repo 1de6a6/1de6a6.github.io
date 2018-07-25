@@ -93,11 +93,11 @@ function initSearch(array) {
     })
 }  
 
-function initSearchClickListener() {
+async function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
-    loadContractInformation(contractsObject[title]);   
+    await loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
 
@@ -169,11 +169,12 @@ async function loadSearch() {
     }
     typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
   }
-  initSearch(categoryContent); 
-  localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
-  initSearchClickListener();
+  return {categoryContent, contractsObject};
 }
  
-$(document).ready(function() {
-  loadSearch();
+$(document).ready(async function() {
+  let objects = await loadSearch();
+  initSearch(objects.categoryContent);
+  localStorage.setItem("tableInformation",JSON.stringify(objects.contractsObject));
+  await initSearchClickListener();
 });  
