@@ -88,13 +88,32 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
-async function get24HourVolume(contractAddress) {
+async function get24HourVolumeETH(contractAddress) {
   let oneDayInBlocks = parseInt(24*60*60/15);
   let blockNumber = await getBlockNumber();    
   let startBlock = blockNumber - oneDayInBlocks;
+  startBlock = 0;
   let url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress + "&startblock=" + startBlock + "&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+  let totalVolume = 0;
   let externalTxs = await getTxs(url);  
-  console.log(externalTxs);
+  for(let in externalTxs) {
+    let txs = externalTxs[i];
+    totalVolume += parseInt(txs.value);
+  }
+  return totalVolume;
+} 
+
+async function get24HourVolumeToken(contractAddress) {
+  let tradedTokenAddress = await getTradedToken(contractAddress);
+  let oneDayInBlocks = parseInt(24*60*60/15);
+  let blockNumber = await getBlockNumber();    
+  let startBlock = blockNumber - oneDayInBlocks;
+  startBlock = 0;
+  let url = "https://api.etherscan.io/api?module=logs&action=getLogs" + "&fromBlock=" + startBlock
+  + "&toBlock=latest&address=" + tradedTokenAddress + "&topic0=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+  + "&topic2=" + contractAddress + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+  let tokenTxs = await getTxs(url);  
+  console.log(tokenTxs);
 } 
 
 async function loadContractInformation(arr) {
@@ -104,9 +123,10 @@ async function loadContractInformation(arr) {
     let commission = await getCommission(contractAddress);
     commission = (parseInt(commission)/1e18).toString() + " %";
     let admin = await getAdmin(contractAddress);
+    let ethVolume = await get24HourVolumeETH(contractAddress);
+    let tokenVolume = await get24HourVolumeETH(contractAddress);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + 0 + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
     $(query).append(rowHTML);
-    await get24HourVolume(contractAddress);
   }  
 }  
 
