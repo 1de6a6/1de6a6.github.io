@@ -129,12 +129,10 @@ async function get24HourVolumeToken(contractAddress) {
   let tokenTxs = await getTxs(url);  
   for(let i in tokenTxs) {
     let txs = tokenTxs[i];
-    console.log("0x" + txs.data.slice(51));
     totalVolume += parseInt("0x" + txs.data.slice(51));
   }
   let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
-  console.log(tokenDecimals);
-  totalVolume = totalVolume/tokenDecimals;
+  totalVolume = totalVolume/(Math.pow(10,tokenDecimals));
   return totalVolume;
 } 
 
@@ -145,9 +143,8 @@ async function loadContractInformation(arr) {
     let commission = await getCommission(contractAddress);
     commission = (parseInt(commission)/1e18).toString() + " %";
     let admin = await getAdmin(contractAddress);
-    let ethVolume = await get24HourVolumeETH(contractAddress);
+    let ethVolume = (await get24HourVolumeETH(contractAddress))/Math.pow(10,18);
     let tokenVolume = await get24HourVolumeToken(contractAddress);
-    console.log(tokenVolume);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + ethVolume + "</td><td>" + commission + "</td><td>" + tokenVolume + "</td></tr>";
     $(query).append(rowHTML);
   }  
