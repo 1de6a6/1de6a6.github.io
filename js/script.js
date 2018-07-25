@@ -48,17 +48,15 @@ function getTokenName(address) {
 }  
 
 function initSearch(array) {
-      $('.ui.search')
-        .search({
-          source: array
-        })
+  $('.ui.search')
+    .search({
+      source: array
+    })
 }  
 
 function initSearchClickListener() {
   $('.ui.search').change(function(e){
-    console.log($('.title'));
-    console.log($('.title').text());
-    console.log(e);
+    console.log($(e),e);
   })
 }                                                                                            
 
