@@ -103,10 +103,10 @@ function initSearchClickListener() {
 
 function initButtonClick() {
   $('.ui.button').on('click', function(e) {
-    console.log(e);
-    console.log($(e.currentTarget).text());
+    let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
+    console.log(html.previousSibling.previousSibling.previousSibling);
   });
 }  
 
