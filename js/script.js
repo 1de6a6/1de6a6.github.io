@@ -148,7 +148,7 @@ async function loadContractInformation(arr) {
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18)).toFixed(2);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + ethVolume.toString() + " ETH/ " + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
-    + '<div class="ui input"><input type="number"></div>' + "</td><td>" 
+    + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
     + '<div class="ui large buttons"> <button class="ui button">Buy</button> <div class="or"></div> <button class="ui button">Sell</button> </div>'  
     + "</td></tr>";
     $(query).append(rowHTML);
