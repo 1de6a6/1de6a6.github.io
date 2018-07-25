@@ -103,7 +103,8 @@ function initSearchClickListener() {
 
 function initButtonClick() {
   $('.ui.button').on('click', function(e) {
-    console.log($(e.currentTarget)[0].offsetParent.previousSibling).find("input").val());
+    console.log($(e.currentTarget).parent().prev());
+    console.log($(e.currentTarget)[0].offsetParent.previousSibling);
     console.log($(e.currentTarget).text());
     console.log($(e.currentTarget).prev());
   });
