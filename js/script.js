@@ -101,6 +101,12 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
+function initButtonClick() {
+  $('.ui.button').on('click', function(e) {
+    console.log(e);
+  });
+}  
+
 async function get24HourVolumeETH(contractAddress) {
   let oneDayInBlocks = parseInt(24*60*60/15);
   let blockNumber = await getBlockNumber();    
@@ -153,6 +159,7 @@ async function loadContractInformation(arr) {
     + "</td></tr>";
     $(query).append(rowHTML);
   }  
+  initButtonClick();
 }  
 
 async function loadSearch() {
