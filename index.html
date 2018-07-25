@@ -79,7 +79,7 @@ $('.ui.dropdown')
 </script>
 <script>
 setInterval(function() {
-  web3.eth.getAccounts(function(val, err) {
+  web3.eth.getAccounts(function(err, val) {
     console.log(val);
     if(val.length === 0) {
       $('#userAddress').text(val[0]);      
