@@ -57,12 +57,17 @@ function initSearch(array) {
 function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
-    let tradedTokenAddress = JSON.parse(localStorage.getItem(title));
-    loadContractInformation(tradedTokenAddress);
+    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
+    loadContractInformation(contractsObject[title]);
   })
 }                                                                                            
 
-function loadContractInformation() {
+function loadContractInformation(arr) {
+  let query = 'body > div:nth-child(4) > div > table';
+  for(let i in arr) {
+    let contractAddress = arr[i];
+    console.log(contractAddress);
+  }  
 }  
 
 async function loadSearch() {
@@ -82,9 +87,9 @@ async function loadSearch() {
     }
     typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
   }
-  console.log(contractsObject);
   initSearch(categoryContent); 
   initSearchClickListener();
+  localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
 }
  
 $(document).ready(function() {
