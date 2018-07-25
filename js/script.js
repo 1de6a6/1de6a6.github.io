@@ -111,7 +111,7 @@ async function get24HourVolumeToken(contractAddress) {
   startBlock = 0;
   let url = "https://api.etherscan.io/api?module=logs&action=getLogs" + "&fromBlock=" + startBlock
   + "&toBlock=latest&address=" + tradedTokenAddress + "&topic0=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-  + "&topic2=" + "0x000000000000000000000000" + contractAddress.slice(0,-2) + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+  + "&topic2=" + "0x000000000000000000000000" + contractAddress.slice(2) + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
   let tokenTxs = await getTxs(url);  
   console.log(tokenTxs);
 } 
