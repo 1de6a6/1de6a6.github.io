@@ -60,8 +60,7 @@ function initSearchClickListener() {
       let title = $(e).attr("title");
       console.log(e,title);
       let address = localStorage.getItem(title);
-    });
-  });
+    })
 }                                                                                            
 
 async function loadSearch() {
