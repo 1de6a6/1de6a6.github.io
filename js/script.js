@@ -103,12 +103,9 @@ function initSearchClickListener() {
 
 function initButtonClick() {
   $('.ui.button').on('click', function(e) {
-    console.log($(e.currentTarget)[0].offsetParent); 
-    console.log($($(e.currentTarget)[0].offsetParent).child()); 
-    console.log($(e.currentTarget).offsetParent());
-    console.log($(e.currentTarget).offsetParent().prev());
-    console.log($(e.currentTarget).text());
-    console.log($(e.currentTarget).prev());
+    console.log($(e.currentTarget)[0]);
+    console.log($(e.currentTarget)[0].offsetParent.previousSibling); 
+    console.log($(e.currentTarget)[0].offsetParent.previousSibling.find("input")); 
   });
 }  
 
