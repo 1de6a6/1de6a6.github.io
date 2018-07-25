@@ -52,7 +52,7 @@ function getCommission(address) {
   });  
 }  
   
-function getInternalTxs(url) {
+function getTxs(url) {
   return new Promise((resolve,reject) => {
     $.get(url).done(function(body) {
       resolve(body['result']);
@@ -81,18 +81,21 @@ function initSearch(array) {
 }  
 
 function initSearchClickListener() {
-  $('.ui.search').change(async function() {
+  $('.ui.search').change(function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
-    loadContractInformation(contractsObject[title]);
-    let blockNumber = await getBlockNumber();    
-    let url = "https://api.etherscan.io/api?module=account&action=txlist&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
-    let externalTxs = await getInternalTxs(url);
-    let url1 = "https://api.etherscan.io/api?module=account&action=txlistexternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
-    let internalTxs = await getInternalTxs(url);    
-    console.log(externalTxs,internalTxs);
+    loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
+
+async function get24HourVolume(contractAddress) {
+  let oneDayInBlocks = parseInt(24*60*60/15);
+  let blockNumber = await getBlockNumber();    
+  let startBlock = blockNumber - oneDayInBlocks;
+  let url = "https://api.etherscan.io/api?module=account&action=txlistexternal&address=" + contractAddress + "&startblock=" + startBlock + "&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+  let externalTxs = await getTxs(url);  
+  console.log(externalTxs);
+} 
 
 async function loadContractInformation(arr) {
   let query = 'body > div:nth-child(4) > div > table';
@@ -103,13 +106,14 @@ async function loadContractInformation(arr) {
     let admin = await getAdmin(contractAddress);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + 0 + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
     $(query).append(rowHTML);
+    await get24HourVolume(contractAddress);
   }  
 }  
 
 async function loadSearch() {
   let blockNumber = await getBlockNumber();
   let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
-  let internalTxs = await getInternalTxs(url);
+  let internalTxs = await getTxs(url);
   let internalTxsArray = "";
   let categoryContent = [];
   let contractsObject = {};
