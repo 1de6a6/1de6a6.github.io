@@ -54,9 +54,14 @@ function initSearch(array) {
     })
 }  
 
+function loadContractInformation() {
+}  
+
 function initSearchClickListener() {
-  $('.ui.search').change(function(e){
-    console.log($(e),e);
+  $('.ui.search').change(function() {
+    let title = $('.title').text();
+    let contractObject = localStorage.getItem(title);
+    console.log(contractObject);
   })
 }                                                                                            
 
@@ -75,7 +80,7 @@ async function loadSearch() {
       initSearch(categoryContent);
       initSearchClickListener();
     }  
-    localStorage.setItem(name,tradedTokenAddress);    
+    localStorage.setItem(name,{'tradedToken':tradedTokenAddress,'contractAddress':contractAddress});    
   }
 }
  
