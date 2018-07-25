@@ -20,10 +20,8 @@
       </div>
     </div> 
     <div class="item">
-      <div class="ui negative small message">
-        <div class="header">
+      <div class="ui negative small message header" id="metamask">
           Unlock Metamask
-        </div>
       </div>      
     </div>
   </div>
@@ -78,14 +76,22 @@ $('.ui.dropdown')
   .dropdown();
 </script>
 <script>
-setInterval(function() {
-  web3.eth.getAccounts(function(err, val) {
-    console.log(val);
-    if(val.length === 0) {
-      $('#userAddress').text(val[0]);      
-    }
-  });
-}, 30000);  
+		setInterval(function() {
+			web3.eth.getAccounts(function(err, accounts) {
+				if (err) return
+				let element = $("#metamask");
+				if (accounts[0]) {
+					element.removeClass("negative");
+					element.addClass("success");
+					element.text("Metamask Unlocked");
+					localStore.setItem("userAddress", accounts[0]);
+				} else {
+					element.removeClass("success");
+					element.addClass("negative");
+					element.text("Metamask Locked");
+				}
+			})
+		}, 5000) 
 </script> 
 </body>
 </html>
