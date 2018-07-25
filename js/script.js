@@ -101,7 +101,7 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
-function initButtonClick() {
+async function initButtonClick() {
   $('.ui.button').on('click', function(e) {
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
