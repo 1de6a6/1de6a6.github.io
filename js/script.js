@@ -94,7 +94,7 @@ function initSearch(array) {
 }  
 
 async function initSearchClickListener() {
-  $('.ui.search').change(function() {
+  $('.ui.search').change(async function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
     await loadContractInformation(contractsObject[title]);   
