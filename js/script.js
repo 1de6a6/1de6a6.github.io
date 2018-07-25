@@ -42,7 +42,7 @@ function getAdmin(address) {
 function getCommission(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
   return new Promise((resolve,reject) => {
-    liquidityContract.commission(function(err,body) {
+    liquidityContract.commission_ratio(function(err,body) {
       if(!err) {
         resolve(body);
       }  else {
