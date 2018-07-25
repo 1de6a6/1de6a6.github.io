@@ -140,12 +140,14 @@ async function loadContractInformation(arr) {
   let query = 'body > div:nth-child(4) > div > table';
   for(let i in arr) {
     let contractAddress = arr[i];
+    let tradedTokenAddress = await getTradedToken(contractAddress);
+    let name = await getTokenName(tradedTokenAddress);
     let commission = await getCommission(contractAddress);
     commission = (parseInt(commission)/1e18).toString() + " %";
     let admin = await getAdmin(contractAddress);
-    let ethVolume = (await get24HourVolumeETH(contractAddress))/Math.pow(10,18);
-    let tokenVolume = await get24HourVolumeToken(contractAddress);
-    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + ethVolume + "</td><td>" + commission + "</td><td>" + tokenVolume + "</td></tr>";
+    let ethVolume = (await get24HourVolumeETH(contractAddress))/Math.pow(10,18).toFixed(2);
+    let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
+    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + ethVolume.toString() + " ETH/"  + tokenVolume.toString() + " /" + name  + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
     $(query).append(rowHTML);
   }  
 }  
