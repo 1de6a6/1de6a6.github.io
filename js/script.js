@@ -80,7 +80,7 @@ async function loadSearch() {
       initSearch(categoryContent);
       initSearchClickListener();
     }  
-    localStorage.setItem(name,{'tradedToken':tradedTokenAddress,'contractAddress':contractAddress});    
+    localStorage.setItem(name,'{"tradedToken":tradedTokenAddress,"contractAddress":contractAddress}');    
   }
 }
  
