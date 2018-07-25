@@ -103,7 +103,7 @@ function initSearchClickListener() {
 
 function initButtonClick() {
   $('.ui.button').on('click', function(e) {
-    console.log($(e.currentTarget));
+    console.log($(e.currentTarget).text());
   });
 }  
 
