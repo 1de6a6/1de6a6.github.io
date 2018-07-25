@@ -88,7 +88,7 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
-function loadContractInformation(arr) {
+async function loadContractInformation(arr) {
   let query = 'body > div:nth-child(4) > div > table';
   for(let i in arr) {
     let contractAddress = arr[i];
@@ -119,8 +119,8 @@ async function loadSearch() {
     typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
   }
   initSearch(categoryContent); 
-  initSearchClickListener();
   localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
+  initSearchClickListener();
 }
  
 $(document).ready(function() {
