@@ -55,7 +55,8 @@ function initSearch(array) {
 }  
 
 function initSearchClickListener() {
-  $('body > div.left-container > div > div > div.results.transition.visible > a > div')
+  let query = "body > div.left-container > div > div > div.results.transition.visible";
+  $(query)
     .on('click', function(e) {
       let title = $(e).attr("title");
       console.log(e,title);
