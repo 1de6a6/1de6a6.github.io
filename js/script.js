@@ -25,6 +25,32 @@ function getTradedToken(address) {
     });
   });  
 }  
+
+function getAdmin(address) {
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+  return new Promise((resolve,reject) => {
+    liquidityContract.admin(function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}  
+
+function getCommission(address) {
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+  return new Promise((resolve,reject) => {
+    liquidityContract.commission(function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}  
   
 function getInternalTxs(url) {
   return new Promise((resolve,reject) => {
@@ -66,7 +92,11 @@ function loadContractInformation(arr) {
   let query = 'body > div:nth-child(4) > div > table';
   for(let i in arr) {
     let contractAddress = arr[i];
-    console.log(contractAddress);
+    let commission = (parseInt(await getCommission(contractAddress))/1e18).toString() + " %";
+    let admin = await getAdmin();
+    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + + "</td><td>" + commission + "</td><td>" + + "</td></tr>";
+    console.log(rowHTML);
+    $(query).append(rowHTML);
   }  
 }  
 
