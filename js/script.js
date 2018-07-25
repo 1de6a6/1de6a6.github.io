@@ -73,6 +73,19 @@ function getTokenName(address) {
   });  
 }  
 
+function getTokenDecimals(address) {
+  let tokenContract = web3.eth.contract(tokenContractABI).at(address);
+  return new Promise((resolve,reject) => {
+    tokenContract.decimals(function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}  
+
 function initSearch(array) {
   $('.ui.search')
     .search({
@@ -117,8 +130,10 @@ async function get24HourVolumeToken(contractAddress) {
   for(let i in tokenTxs) {
     let txs = tokenTxs[i];
     totalVolume += parseInt("0x" + txs.data.slice(51));
-  }  
-  console.log(totalVolume);
+  }
+  let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
+  totalVolume = totalVolume/tokenDecimals;
+  return totalVolume;
 } 
 
 async function loadContractInformation(arr) {
@@ -130,7 +145,8 @@ async function loadContractInformation(arr) {
     let admin = await getAdmin(contractAddress);
     let ethVolume = await get24HourVolumeETH(contractAddress);
     let tokenVolume = await get24HourVolumeToken(contractAddress);
-    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + 0 + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
+    console.log(tokenVolume);
+    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + ethVolume + "</td><td>" + commission + "</td><td>" + tokenVolume + "</td></tr>";
     $(query).append(rowHTML);
   }  
 }  
