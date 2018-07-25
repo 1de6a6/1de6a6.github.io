@@ -129,9 +129,11 @@ async function get24HourVolumeToken(contractAddress) {
   let tokenTxs = await getTxs(url);  
   for(let i in tokenTxs) {
     let txs = tokenTxs[i];
+    console.log("0x" + txs.data.slice(51));
     totalVolume += parseInt("0x" + txs.data.slice(51));
   }
   let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
+  console.log(tokenDecimals);
   totalVolume = totalVolume/tokenDecimals;
   return totalVolume;
 } 
