@@ -94,7 +94,7 @@ async function loadContractInformation(arr) {
     let contractAddress = arr[i];
     let commission = await getCommission(contractAddress);
     commission = (parseInt(commission)/1e18).toString() + " %";
-    let admin = await getAdmin();
+    let admin = await getAdmin(contractAddress);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + 0 + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
     console.log(rowHTML);
     $(query).append(rowHTML);
