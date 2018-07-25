@@ -110,8 +110,8 @@ async function initButtonClick() {
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tradeAmount;
-    tradeType === "Buy" ? tradeAmount = inputValue : inputValue *= Math.pow(10,tokenDecimals);
-    console.log(tradeType);
+    tradeType === "Buy" ? tradeAmount = inputValue : tradeAmount = inputValue*Math.pow(10,tokenDecimals);
+    console.log(tradeAmount);
   });
 }  
 
