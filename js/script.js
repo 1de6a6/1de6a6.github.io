@@ -102,7 +102,7 @@ function initSearchClickListener() {
 }                                                                                            
 
 async function initButtonClick() {
-  $('.ui.button').on('click', function(e) {
+  $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
