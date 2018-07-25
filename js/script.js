@@ -92,7 +92,7 @@ async function get24HourVolume(contractAddress) {
   let oneDayInBlocks = parseInt(24*60*60/15);
   let blockNumber = await getBlockNumber();    
   let startBlock = blockNumber - oneDayInBlocks;
-  let url = "https://api.etherscan.io/api?module=account&action=txlistexternal&address=" + contractAddress + "&startblock=" + startBlock + "&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+  let url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress + "&startblock=" + startBlock + "&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
   let externalTxs = await getTxs(url);  
   console.log(externalTxs);
 } 
