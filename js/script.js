@@ -81,10 +81,16 @@ function initSearch(array) {
 }  
 
 function initSearchClickListener() {
-  $('.ui.search').change(function() {
+  $('.ui.search').change(async function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
     loadContractInformation(contractsObject[title]);
+    let blockNumber = await getBlockNumber();    
+    let url = "https://api.etherscan.io/api?module=account&action=txlist&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+    let externalTxs = await getInternalTxs(url);
+    let url1 = "https://api.etherscan.io/api?module=account&action=txlistexternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
+    let internalTxs = await getInternalTxs(url);    
+    console.log(externalTxs,internalTxs);
   })
 }                                                                                            
 
@@ -96,7 +102,6 @@ async function loadContractInformation(arr) {
     commission = (parseInt(commission)/1e18).toString() + " %";
     let admin = await getAdmin(contractAddress);
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + 0 + "</td><td>" + commission + "</td><td>" + 0 + "</td></tr>";
-    console.log(rowHTML);
     $(query).append(rowHTML);
   }  
 }  
