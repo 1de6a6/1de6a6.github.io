@@ -55,13 +55,12 @@ function initSearch(array) {
 }  
 
 function initSearchClickListener() {
-  let query = "body > div.left-container > div > div > div.results.transition.visible";
-  $(query)
-    .on('click', function(e) {
-      let title = $(e).attr("title");
-      console.log(e,title);
-      let address = localStorage.getItem(title);
-    })
+  $('.ui.search').change(function(e){
+    let title = $(e).attr("title");
+    console.log(e,title);
+    let address = localStorage.getItem(title);
+    console.log(address);
+  })
 }                                                                                            
 
 async function loadSearch() {
