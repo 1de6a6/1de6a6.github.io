@@ -96,7 +96,7 @@ async function get24HourVolumeETH(contractAddress) {
   let url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress + "&startblock=" + startBlock + "&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
   let totalVolume = 0;
   let externalTxs = await getTxs(url);  
-  for(let in externalTxs) {
+  for(let i in externalTxs) {
     let txs = externalTxs[i];
     totalVolume += parseInt(txs.value);
   }
