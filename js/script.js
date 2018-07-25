@@ -54,22 +54,24 @@ function initSearch(array) {
     })
 }  
 
-function loadContractInformation() {
-}  
-
 function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
-    let contractObject = localStorage.getItem(title);
-    console.log(contractObject);
+    let tradedTokenAddress = JSON.parse(localStorage.getItem(title));
+    loadContractInformation(tradedTokenAddress);
   })
 }                                                                                            
+
+function loadContractInformation() {
+}  
 
 async function loadSearch() {
   let blockNumber = await getBlockNumber();
   let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
   let internalTxs = await getInternalTxs(url);
+  let internalTxsArray = "";
   let categoryContent = [];
+  let contractsObject = {};
   for(let i in internalTxs) {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
@@ -77,11 +79,12 @@ async function loadSearch() {
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
-      initSearch(categoryContent);
-      initSearchClickListener();
-    }  
-    localStorage.setItem(name,'{"tradedToken":tradedTokenAddress,"contractAddress":contractAddress}');    
+    }
+    typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
   }
+  console.log(contractsObject);
+  initSearch(categoryContent); 
+  initSearchClickListener();
 }
  
 $(document).ready(function() {
