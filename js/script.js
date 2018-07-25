@@ -47,6 +47,22 @@ function getTokenName(address) {
   });  
 }  
 
+function initSearch(array)
+      $('.ui.search')
+        .search({
+          source: array
+        })
+
+function initSearchClickListener() {
+  $('body > div.left-container > div > div > div.results.transition.visible > a > div')
+    .on('click', function(e) {
+      let title = $(e).attr("title");
+      console.log(e,title);
+      let address = localStorage.getItem(title);
+    });
+  });
+}                                                                                            
+
 async function loadSearch() {
   let blockNumber = await getBlockNumber();
   let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
@@ -57,14 +73,10 @@ async function loadSearch() {
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
     let searchObject = {'title':name};
-    console.log(searchObject);
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
-      console.log(categoryContent);
-      $('.ui.search')
-        .search({
-          source: categoryContent
-        })
+      initSearch(categoryContent);
+      initSearchClickListener();
     }  
     localStorage.setItem(name,tradedTokenAddress);    
   }
