@@ -56,12 +56,9 @@ function initSearch(array) {
 
 function initSearchClickListener() {
   $('.ui.search').change(function(e){
-    let query = "body > div.left-container > div > div > div.ui.icon.input > input";
-    console.log($(query).val());
-    let title = $(e).attr("title");
-    console.log(e,title);
-    let address = localStorage.getItem(title);
-    console.log(address);
+    console.log($('.title'));
+    console.log($('.title').text());
+    console.log(e);
   })
 }                                                                                            
 
