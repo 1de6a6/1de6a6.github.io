@@ -93,11 +93,11 @@ function initSearch(array) {
     })
 }  
 
-async function initSearchClickListener() {
-  $('.ui.search').change(async function() {
+function initSearchClickListener() {
+  $('.ui.search').change(function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
-    await loadContractInformation(contractsObject[title]);   
+    loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
 
@@ -176,5 +176,5 @@ $(document).ready(async function() {
   let objects = await loadSearch();
   initSearch(objects.categoryContent);
   localStorage.setItem("tableInformation",JSON.stringify(objects.contractsObject));
-  await initSearchClickListener();
+  initSearchClickListener();
 });  
