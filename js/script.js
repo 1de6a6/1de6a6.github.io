@@ -150,7 +150,7 @@ async function get24HourVolumeToken(contractAddress) {
 } 
 
 async function loadContractInformation(arr) {
-  let query = 'body > div:nth-child(4) > div > table';
+  let query = '#main > div.right-container > div > div > table';
   for(let i in arr) {
     let contractAddress = arr[i];
     let tradedTokenAddress = await getTradedToken(contractAddress);
