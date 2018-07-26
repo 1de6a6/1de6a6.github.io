@@ -142,9 +142,9 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
-async function initBuyClickListener(amount) {
+async function initBuyClickListener(tx) {
   $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', async function() {
-    await buyTokens();  
+    await sendTransaction({from:tx.from,to:tx.to,value:tx.value}),                    
   });    
 }
                                                                                                                            
@@ -162,8 +162,9 @@ async function initButtonClick() {
     let tradeAmount, ethAmount;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
     ethAmount = (tradeAmount*ethBalance)/(tokenBalance + tradeAmount),
-    $('#ethAmount').text(ethAmount.toString()), await sendTransaction({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}),                
-    $('.ui.basic.modal').modal('show'), await initBuyClickListener())
+    $('#ethAmount').text(ethAmount.toString()), 
+    $('.ui.basic.modal').modal('show'),
+    await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}))
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approveAndSellTokens(tradeAmount));
   });
 }  
