@@ -54,6 +54,19 @@ function sellTokens(tx) {
 }
 
 
+function isDeactivated(address) {
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+  return new Promise((resolve,reject) => {
+    liquidityContract.trading_deactivated(function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}  
+
 function getTradedTokenBalance(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
   return new Promise((resolve,reject) => {
@@ -229,7 +242,10 @@ async function loadContractInformation(arr) {
     let admin = await getAdmin(contractAddress);
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18)).toFixed(2);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
-    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>" + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
+    let isDeactivated = new Boolean(await isDeactivated(contractAddress));
+    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
+    +  !isDeactivated  + "</td><td>"
+    + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
     + '<div class="ui large buttons"> <button class="ui button">Buy</button> <div class="or"></div> <button class="ui button">Sell</button> </div>'  
     + "</td></tr>";
