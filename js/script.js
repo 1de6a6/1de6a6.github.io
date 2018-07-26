@@ -111,7 +111,7 @@ async function initButtonClick() {
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tradeAmount;
-    tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,18), $('.ui.basic.modal').modal('show')) : tradeAmount = inputValue * Math.pow(10,tokenDecimals);
+    tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,18), $('#ethAmount').text(tradeAmount), $('.ui.basic.modal').modal('show')) : tradeAmount = inputValue * Math.pow(10,tokenDecimals);
   });
 }  
 
