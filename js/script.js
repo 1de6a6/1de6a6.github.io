@@ -59,7 +59,6 @@ function isDeactivated(address) {
   return new Promise((resolve,reject) => {
     liquidityContract.trading_deactivated(function(err,body) {
       if(!err) {
-        console.log(body);
         resolve(body);
       }  else {
            reject(err);
@@ -172,7 +171,6 @@ function initSearchClickListener() {
 
 async function initBuyClickListener(tx) {
   $('.ui.green.ok.inverted.button').on('click', async function() {
-    console.log("here");
     await sendTransaction({from:tx.from,to:tx.to,value:tx.value});                    
   });    
 }
@@ -183,8 +181,7 @@ async function initButtonClick() {
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
     let userAddress = localStorage.getItem("userAddress");
-    let contractAddress = $(html.previousSibling.previousSibling.previousSibling).text();
-    console.log(contractAddress);
+    let contractAddress = $(html.previousSibling.previousSibling.previousSibling.previousSibling).text();
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = await getTradedTokenBalance(contractAddress);
