@@ -59,6 +59,7 @@ function isDeactivated(address) {
   return new Promise((resolve,reject) => {
     liquidityContract.trading_deactivated(function(err,body) {
       if(!err) {
+        console.log(body);
         resolve(body);
       }  else {
            reject(err);
