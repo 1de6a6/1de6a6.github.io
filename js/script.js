@@ -97,6 +97,7 @@ function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
+    $('#tradedToken').text(title);
     loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
