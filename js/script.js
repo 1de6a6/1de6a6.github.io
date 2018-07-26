@@ -145,6 +145,7 @@ async function initButtonClick() {
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = parseInt(await getTradedTokenBalance(contractAddress));
     let ethBalance = parseInt(await getETHBalance(contractAddress));
+    console.log(tokenDecimals,tokenBalance,ethBalance);
     let tradeAmount, ethAmount;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
     ethAmount = (tokenBalance*ethBalance)/(tokenBalance - tradeAmount), 
