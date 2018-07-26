@@ -170,20 +170,6 @@ async function loadContractInformation(arr) {
   initButtonClick();
 }  
 
-async function populateTable() {
-  let query = '#main > div.left-container > div > div > table';
-  let tokenObject = localStorage.getItem("tableInformation");
-  for(let i in tokenObject) {
-    console.log(tokenObject[i],i);
-    let contractAddress = tokenObject[i];
-    let tradedTokenAddress = await getTradedToken(contractAddress);
-    let name = await getTokenName(tradedTokenAddress);
-    let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
-    let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toString() + "</td></tr>";
-    $(query).append(rowHTML);
-  }  
-}  
-
 async function loadSearch() {
   let blockNumber = await getBlockNumber();
   let url = "https://api.etherscan.io/api?module=account&action=txlistinternal&address=0x35afc160989db7b975e1e39f70c59531ef267858&startblock=0&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
@@ -191,10 +177,14 @@ async function loadSearch() {
   let internalTxsArray = "";
   let categoryContent = [];
   let contractsObject = {};
+  let query = '#main > div.left-container > div > div > table';  
   for(let i in internalTxs) {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
+    let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2); 
+    let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toString() + "</td></tr>";
+    $(query).append(rowHTML);    
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
@@ -203,7 +193,6 @@ async function loadSearch() {
   }
   initSearch(categoryContent);
   localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
-  populateTable(); 
   initSearchClickListener();  
 }
  
