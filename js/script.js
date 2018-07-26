@@ -188,7 +188,6 @@ async function get24HourVolumeETH(contractAddress) {
   let oneDayInBlocks = parseInt(24*60*60/15);
   let blockNumber = await getBlockNumber();    
   let startBlock = blockNumber - oneDayInBlocks;
-  startBlock = 0;
   let url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress + "&startblock=" + startBlock + "&endblock=" + blockNumber + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
   let totalVolume = 0;
   let externalTxs = await getTxs(url);  
@@ -205,7 +204,6 @@ async function get24HourVolumeToken(contractAddress) {
   let oneDayInBlocks = parseInt(24*60*60/15);
   let blockNumber = await getBlockNumber();    
   let startBlock = blockNumber - oneDayInBlocks;
-  startBlock = 0;
   let url = "https://api.etherscan.io/api?module=logs&action=getLogs" + "&fromBlock=" + startBlock
   + "&toBlock=latest&address=" + tradedTokenAddress + "&topic0=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
   + "&topic2=" + "0x000000000000000000000000" + contractAddress.slice(2) + "&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"; 
