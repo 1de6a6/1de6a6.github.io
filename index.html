@@ -26,13 +26,8 @@
     </div>
   </div>
 </div> 
-<div>  
-  <div class="ui fluid two item menu">
-    <a class="item">Your Address:&nbsp;<span id="userAddress"></span></a>
-    <a class="item">Your Balance:&nbsp;<span id="userBalance"></span></a>
-  </div>
-</div>	
-<div class="left-container" style="width:20%;float:left;margin-left:1%;margin-right:1%;">  
+<div id="top">
+<div class="left-container" style="width:49%;float:left;margin-left:1%;">  		
   <div class="ui segment">  
     <div class="ui search">
       <div class="ui icon input">
@@ -42,7 +37,17 @@
      <div class="results"> 
        </div>
     </div>
+  </div>
+</div>	
+<div class="right-container" style="width:49%;float:right;margin-right:1%;">  		
+  <div class="ui fluid two item menu">
+    <a class="item">Your Address:&nbsp;<span id="userAddress"></span></a>
+    <a class="item">Your Balance:&nbsp;<span id="userBalance"></span></a>
   </div>	
+</div>		
+</div>	
+<div id="main">	
+<div class="left-container" style="width:20%;float:left;margin-left:1%;margin-right:1%;">  	
   <div class="ui segment">  
     <table class="ui fixed single line celled table">
       <thead>
@@ -52,8 +57,8 @@
       </thead>
     </table> 	
   </div>  
-</div>  	
-<div class="right-container" style="width:77%;float:right;margin-right:1%;">  
+</div>  
+<div class="right-container" style="width:77%;float:right;margin-right:1%;">  	
   <div class="ui segment">
    <table class="ui fixed single line celled table">
      <thead>
@@ -67,7 +72,8 @@
      </thead>
    </table>
   </div>
-</div>  
+</div> 
+</div>	
 <script src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 <script src="https://cdn.rawgit.com/caolan/async/3741f80b/dist/async.min.js"></script>  
 <script src="js/script.js"></script>  
