@@ -173,7 +173,6 @@ async function loadContractInformation(arr) {
 function loadTable(object) {
   let query = '#main > div.left-container > div > div > table';   
   for(let i in object) {
-    console.log(i,object);
     let name = i;
     let tokenVolume = object[i];
     let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toString() + "</td></tr>";
@@ -194,8 +193,7 @@ async function loadSearch() {
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2); 
-    console.log(tokenObject[name]);
-    tokenObject[name] ? tokenObject[name] += tokenVolume : tokenObject[name] = 0;  
+    tokenObject[name] === undefined ? tokenObject[name] += tokenVolume : tokenObject[name] = 0;  
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
