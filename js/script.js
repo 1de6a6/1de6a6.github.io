@@ -151,6 +151,7 @@ async function get24HourVolumeToken(contractAddress) {
 
 async function loadContractInformation(arr) {
   let query = '#main > div.right-container > div > div > table';
+  let query2 = '#main > div.left-container > div > div > table';
   for(let i in arr) {
     let contractAddress = arr[i];
     let tradedTokenAddress = await getTradedToken(contractAddress);
@@ -167,6 +168,20 @@ async function loadContractInformation(arr) {
     $(query).append(rowHTML);
   }  
   initButtonClick();
+}  
+
+async function populateTable() {
+  let query = '#main > div.left-container > div > div > table';
+  let tokenObject = localStorage.getItem("tableInformation");
+  for(let i in tokenObject) {
+    console.log(tokenObject[i],i);
+    let contractAddress = tokenObject[i];
+    let tradedTokenAddress = await getTradedToken(contractAddress);
+    let name = await getTokenName(tradedTokenAddress);
+    let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
+    let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toString() + "</td></tr>";
+    $(query).append(rowHTML);
+  }  
 }  
 
 async function loadSearch() {
@@ -188,6 +203,7 @@ async function loadSearch() {
   }
   initSearch(categoryContent);
   localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
+  populateTable(); 
   initSearchClickListener();  
 }
  
