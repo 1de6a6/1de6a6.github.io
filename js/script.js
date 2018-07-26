@@ -41,7 +41,7 @@ function getTradedToken(address) {
 
 function sellTokens(tx) {
   return new Promise((resolve,reject) => {
-    let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+    let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
     let data = liquidityContract.sell_tokens.getData(tx.value);
     web3.eth.sendTransaction({from:tx.from,to:tx.to,data:data},function(err,body) {
       if(!err) {
