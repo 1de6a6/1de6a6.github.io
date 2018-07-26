@@ -144,7 +144,7 @@ function initSearchClickListener() {
 
 async function initBuyClickListener(tx) {
   $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', async function() {
-    await sendTransaction({from:tx.from,to:tx.to,value:tx.value}),                    
+    await sendTransaction({from:tx.from,to:tx.to,value:tx.value});                    
   });    
 }
                                                                                                                            
