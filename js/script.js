@@ -143,12 +143,11 @@ async function initButtonClick() {
     let contractAddress = $(html.previousSibling.previousSibling.previousSibling).text();
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
-    let tokenBalance = parseInt(await getTradedTokenBalance());
-    let ethBalance = parseInt(await getETHBalance());
-    console.log(tokenBalance,ethBalance);
+    let tokenBalance = parseInt(await getTradedTokenBalance(contractAddress));
+    let ethBalance = parseInt(await getETHBalance(contractAddress));
     let tradeAmount, ethAmount;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
-    ethAmount = (tokenBalance*ethBalance)/(tokenBalance - tradeAmount), console.log(ethAmount), 
+    ethAmount = (tokenBalance*ethBalance)/(tokenBalance - tradeAmount), 
     $('#ethAmount').text(ethAmount),                 
     $('.ui.basic.modal').modal('show'), await initBuyClickListener())
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approveAndSellTokens(tradeAmount));
