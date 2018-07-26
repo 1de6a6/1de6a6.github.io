@@ -102,6 +102,12 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
+async function initBuyClickListener(amount) {
+  $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', function() {
+    await buyTokens();  
+  });    
+}
+                                                                                                                           
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
@@ -111,7 +117,9 @@ async function initButtonClick() {
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tradeAmount;
-    tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,18), $('#ethAmount').text(inputValue), $('.ui.basic.modal').modal('show')) : tradeAmount = inputValue * Math.pow(10,tokenDecimals);
+    tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,18), $('#ethAmount').text(inputValue), 
+    $('.ui.basic.modal').modal('show'), await initBuyClickListener())
+    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approveAnSellTokens(tradeAmount));
   });
 }  
 
