@@ -184,6 +184,7 @@ async function initButtonClick() {
     let inputValue = parseFloat($(html).find('input').val());
     let userAddress = localStorage.getItem("userAddress");
     let contractAddress = $(html.previousSibling.previousSibling.previousSibling).text();
+    console.log(contractAddress);
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = await getTradedTokenBalance(contractAddress);
