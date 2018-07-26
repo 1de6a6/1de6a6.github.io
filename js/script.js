@@ -37,7 +37,19 @@ function getTradedToken(address) {
       }
     });
   });  
-}  
+}
+
+function sellTokens(tx) {
+  return new Promise((resolve,reject) => {
+    liquidityContract.sell_tokens({from:tx.from,to:tx.to,value:tx.value},function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}
 
 
 function getTradedTokenBalance(address) {
@@ -166,7 +178,7 @@ async function initButtonClick() {
     $('#ethAmount').text(ethAmount.toString()), 
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}),
     $('.ui.basic.modal').modal('show'))
-    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approveAndSellTokens(tradeAmount));
+    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await sellTokens({from:userAddress,to:contractAddress,value:tradeAmount}));
   });
 }  
 
