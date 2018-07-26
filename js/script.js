@@ -3,7 +3,7 @@ const tokenContractABI = JSON.parse('[{"constant":false,"inputs":[{"name":"_newP
 
 function sendTransaction(tx) {
   return new Promise((resolve,reject) => {
-    web3.eth.send({from:tx.from,to:tx.to,value:tx.value}, function(err,val) {
+    web3.eth.sendTransaction({from:tx.from,to:tx.to,value:tx.value}, function(err,val) {
       if(!err) {
         resolve(val);
       } else {
