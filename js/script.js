@@ -26,6 +26,33 @@ function getTradedToken(address) {
   });  
 }  
 
+
+function getTradedTokenBalance(address) {
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+  return new Promise((resolve,reject) => {
+    liquidityContract.traded_token_balance(function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}  
+
+function getETHBalance(address) {
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
+  return new Promise((resolve,reject) => {
+    liquidityContract.eth_balance(function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });  
+}  
+
 function getAdmin(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
   return new Promise((resolve,reject) => {
@@ -116,10 +143,13 @@ async function initButtonClick() {
     let contractAddress = $(html.previousSibling.previousSibling.previousSibling).text();
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
-    let tradeAmount;
-    tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,18), $('#ethAmount').text(inputValue), 
+    let tokenBalance = parseInt(await getTradedTokenBalance());
+    let ethBalance = parseInt(await getETHBalance());
+    let tradeAmount, ethAmount;
+    tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
+    ethAmount = (tokenBalance*ethBalance)/(tokenBalance - tradeAmount), $('#ethAmount').text(ethAmount),                       
     $('.ui.basic.modal').modal('show'), await initBuyClickListener())
-    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approveAnSellTokens(tradeAmount));
+    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approveAndSellTokens(tradeAmount));
   });
 }  
 
