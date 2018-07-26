@@ -130,7 +130,7 @@ function initSearchClickListener() {
 }                                                                                            
 
 async function initBuyClickListener(amount) {
-  $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', function() {
+  $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', async function() {
     await buyTokens();  
   });    
 }
