@@ -137,7 +137,9 @@ async function initBuyClickListener(amount) {
                                                                                                                            
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
+    console.log(e.currentTarget);
     let tradeType = $(e.currentTarget).text();
+    console.log(tradeType);
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
     let contractAddress = $(html.previousSibling.previousSibling.previousSibling).text();
