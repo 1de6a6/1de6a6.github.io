@@ -194,6 +194,7 @@ async function loadSearch() {
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2); 
+    console.log(tokenObject[name]);
     tokenObject[name] ? tokenObject[name] += tokenVolume : tokenObject[name] = 0;  
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
