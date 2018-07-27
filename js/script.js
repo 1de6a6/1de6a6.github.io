@@ -225,6 +225,7 @@ async function initBuyClickListener(tx) {
 
 async function initSellClickListener(obj) {
   $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', async function() { 	  
+	  
     await approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
     await sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
   });    
@@ -246,9 +247,9 @@ async function initButtonClick() {
     ethAmount = (tradeAmount*ethBalance)/(tokenBalance + tradeAmount),
     $('#ethAmount').text(ethAmount.toString()), 
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}),
-    $('.ui.basic.modal').modal('show'))
+    $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), $('#tradeAmount').text(inputValue.toString()),
-      $('.ui.basic.modal:nth-child(2)').modal('show'), 
+      $('.ui.basic.modal.two').modal('show'), 
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}));
   });
