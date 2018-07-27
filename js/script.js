@@ -250,7 +250,7 @@ async function initButtonClick() {
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), $('#tradeAmount').text(inputValue.toString()),
       $('.ui.basic.modal:nth-child(2)').modal('show'), 
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
-			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount});
+			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}));
   });
 }  
 
