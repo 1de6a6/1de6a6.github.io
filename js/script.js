@@ -300,7 +300,7 @@ async function loadContractInformation(arr) {
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18)).toFixed(2);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
     let deactivated = await isDeactivated(contractAddress);
-    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
+    let rowHTML = "<tr><td>" + '<a href="' + admin + '></a>' + "</td><td>" + '<a href="' + contractAddress + '></a>' + "</td><td>"
     +  !deactivated  + "</td><td>"
     + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
