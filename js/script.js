@@ -222,7 +222,14 @@ async function initBuyClickListener(tx) {
     await sendTransaction({from:tx.from,to:tx.to,value:tx.value});                    
   });    
 }
-                                                                                                                           
+
+async function initSellClickListener(obj) {
+  $('.ui.green.ok.inverted.button:nth-child(2)').on('click', async function() { 	  
+    await approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
+    await sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
+  });    
+}
+                                                                                                                          
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
@@ -240,8 +247,10 @@ async function initButtonClick() {
     $('#ethAmount').text(ethAmount.toString()), 
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}),
     $('.ui.basic.modal').modal('show'))
-    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), await approve({from:userAddress,to:tradedTokenAddress,value:tradeAmount},contractAddress),
-       await sellTokens({from:userAddress,to:contractAddress,value:tradeAmount}));
+    : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), $('#tradeAmount').text(inputValue.toString()),
+      $('.ui.basic.modal:nth-child(2)').modal('show'), 
+       await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
+			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount});
   });
 }  
 
