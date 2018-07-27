@@ -82,7 +82,7 @@
       </div>
     </div>
     <div class="item">
-	    Your Address:&nbsp;<span id="userAddressLink"></span>
+	    Your Address:&nbsp;<span id="userAddress"></span>
     </div>
     <div class="item">
 	Your Balance:&nbsp;<span id="userBalance"></span>
@@ -144,8 +144,7 @@ $('.ui.dropdown')
 					element.removeClass("negative");
 					element.addClass("success");
 					element.text("Metamask Unlocked");
-					$('#userAddressLink').html('<a href="' +
-					'https://etherscan.io/address/' + userAddress + '"></a>');  
+					$('#userAddress').text(userAddress);;  
 					$('#userBalance').text(userBalance);
 				  });	  
 				} else {
