@@ -350,7 +350,6 @@ async function loadContractInformation(arr) {
     $(query).append(rowHTML);
   }  
   let userBalance = parseInt(await getUserTokenBalance(mainTradedToken));	  
-  let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	
   $('#tradedToken').text(name.toUpperCase());
   $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));		
   initButtonClick();
