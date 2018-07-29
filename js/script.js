@@ -219,6 +219,12 @@ function initSearch(array) {
     })
 }  
 
+function initTokenTable() {
+  $('.#main > div.left-container > div > div > table').on('click', function(e){
+     console.log(e);	  
+  });	  
+}	
+
 function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
@@ -360,6 +366,7 @@ async function loadSearch() {
   loadTable(tokenObject);
   initSearch(categoryContent);
   localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
+  initTokenTable();	
   initSearchClickListener();  
 }
  
