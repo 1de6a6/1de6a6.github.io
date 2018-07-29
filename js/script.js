@@ -232,28 +232,20 @@ function initSearch(array) {
     })
 }  
 
-async function initSearchClickListener() {
-  $('.ui.search').change(async function() {
+function initSearchClickListener() {
+  $('.ui.search').change(function() {
     let title = $('.title').text();
-    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
-    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
-    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
-    console.log(userBalance);	  
-    $('#tradedToken').text(title);
-    $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));	  	  
+    localStorage.setItem("tradedToken",title);	  
+    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));  	  
     loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
 
-async function initTokenTableClickListener() {
-  $('#main > div.left-container > div > div > table > tr').on('click', async function(e) {
+function initTokenTableClickListener() {
+  $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
     let title = e.currentTarget.firstChild.innerText;
-    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  
-    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
-    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
-    console.log(userBalance);	  
-    $('#tradedToken').text(title);
-    $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));	  	  
+    localStorage.setItem("tradedToken",title);	  
+    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  	  	  	  
     loadContractInformation(contractsObject[title]); 	  
   });	  
 }	
@@ -331,11 +323,11 @@ async function get24HourVolumeToken(contractAddress) {
 async function loadContractInformation(arr) {
   let query = '#main > div.right-container > div > div > table';
   let query2 = '#main > div.left-container > div > div > table';
-   $(query + ' tr:gt(0)').remove();	
+  $(query + ' tr:gt(0)').remove();	
+  let name = localStorage.getItem("tradedToken");
+  let tradedTokenAddress = await getTradedToken(arr[name]);
   for(let i in arr) {
     let contractAddress = arr[i];
-    let tradedTokenAddress = await getTradedToken(contractAddress);
-    let name = await getTokenName(tradedTokenAddress);
     let commission = await getCommission(contractAddress);
     commission = ((parseInt(commission)/1e18) * 100).toString() + " %";
     let admin = await getAdmin(contractAddress);
@@ -355,6 +347,10 @@ async function loadContractInformation(arr) {
     + "</td></tr>";
     $(query).append(rowHTML);
   }  
+  let userBalance = parseInt(await getUserTokenBalance(tradedTokenAddress));	  
+  let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));	
+  $('#tradedToken').text(name.toUpperCase());
+  $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));		
   initButtonClick();
 }  
 
