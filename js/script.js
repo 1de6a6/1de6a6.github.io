@@ -311,6 +311,7 @@ async function get24HourVolumeToken(contractAddress) {
 async function loadContractInformation(arr) {
   let query = '#main > div.right-container > div > div > table';
   let query2 = '#main > div.left-container > div > div > table';
+   $(query + ' tr:gt(0)').remove();	
   for(let i in arr) {
     let contractAddress = arr[i];
     let tradedTokenAddress = await getTradedToken(contractAddress);
