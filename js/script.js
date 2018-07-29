@@ -360,7 +360,7 @@ function loadTable(object) {
   for(let i in object) {
     let name = i;
     let tokenVolume = object[i];
-    let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + "</td></tr>";
+    let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
     $(query).append(rowHTML);    
   }  
 }  
@@ -377,8 +377,8 @@ async function loadSearch() {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
-    let tokenVolume = (await get24HourVolumeToken(contractAddress)); 
-    tokenObject[name] ? tokenObject[name] += tokenVolume : (tokenObject[name] = 0, tokenObject[name] += tokenVolume);  
+    let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18)).toFixed(2);
+    tokenObject[name] ? tokenObject[name] += ethVolume : (tokenObject[name] = 0, tokenObject[name] += ethVolume);  
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
