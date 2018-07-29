@@ -187,7 +187,6 @@ function getContractInfo(contractAddress) {
     let url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress 
     + "&startblock=0&endblock=99999999&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"
     $.get(url).done(function(body) {
-      console.log(body);	    
       resolve(body);	    
     });	     
   });	  
@@ -198,6 +197,20 @@ async function approve(tx,contractAddress) {
   let data = tokenContract.approve.getData(contractAddress,tx.value);
   await sendAwaitConfirmations({from:tx.from,to:tx.to,data:data});
 }
+
+async function getUserTokenBalance(tradedTokenAddress) {
+  let userAddress = localStorage.getItem("userAddress);	
+  let tokenContract = web3.eth.contract(tokenContractABI).at(tradedTokenAddress);
+  return new Promise((resolve,reject) => {
+    tokenContract.balanceOf(userAddress, function(err,body) {
+      if(!err) {
+        resolve(body);
+      }  else {
+           reject(err);
+      }
+    });
+  });
+}	
 
 function getTokenDecimals(address) {
   let tokenContract = web3.eth.contract(tokenContractABI).at(address);
@@ -222,8 +235,11 @@ function initSearch(array) {
 function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
-    $('#tradedToken').text(title);
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
+    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
+    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
+    $('#tradedToken').text(title);
+    $('#userTokenBalance').text((userBalance/(Math.pow(10,tokenDecimals)).toFixed(2));	  	  
     loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
@@ -231,9 +247,11 @@ function initSearchClickListener() {
 function initTokenTableClickListener() {
   $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
     let title = e.currentTarget.firstChild.innerText;
-    console.log(title);	  
-    $('#tradedToken').text(title);
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  
+    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
+    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
+    $('#tradedToken').text(title);
+    $('#userTokenBalance').text((userBalance/(Math.pow(10,tokenDecimals)).toFixed(2));	  
     loadContractInformation(contractsObject[title]); 	  
   });	  
 }	
