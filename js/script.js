@@ -300,9 +300,13 @@ async function loadContractInformation(arr) {
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18)).toFixed(2);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
     let deactivated = await isDeactivated(contractAddress);
+    let tradedTokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));	  
+    let ethBalance = parseInt(await getETHBalance(contractAddress))/1e18;
+    let tradedTokenBalance = parseInt(await getTradedTokenBalance(contractAddress))/(Math.pow(10,tradedTokenDecimals));	  
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
     +  !deactivated  + "</td><td>"
-    + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
+    + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" + ethBalance.toString()
+    " ETH/" + " " + tradedTokenBalance + " " + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
     + '<div class="ui large buttons"> <button class="ui button">Buy</button> <div class="or"></div> <button class="ui button">Sell</button> </div>'  
     + "</td></tr>";
