@@ -229,7 +229,7 @@ function initSearchClickListener() {
 }                                                                                            
 
 function initTokenTableClickListener() {
-  $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
+  $('#main > div.left-container > div > div > table > tbody > tr').on('click', function(e) {
     console.log(e);	  
   });	  
 }	
