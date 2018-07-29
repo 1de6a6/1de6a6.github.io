@@ -236,8 +236,8 @@ function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
-    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
-    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
+    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title])));	  
+    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title])));	  
     $('#tradedToken').text(title);
     $('#userTokenBalance').text((userBalance/(Math.pow(10,tokenDecimals)).toFixed(2));	  	  
     loadContractInformation(contractsObject[title]);   
@@ -248,8 +248,8 @@ function initTokenTableClickListener() {
   $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
     let title = e.currentTarget.firstChild.innerText;
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  
-    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
-    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
+    let userBalance = parseInt(await getUserTokenBalance(contractsObject[title])));	  
+    let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title])));	  
     $('#tradedToken').text(title);
     $('#userTokenBalance').text((userBalance/(Math.pow(10,tokenDecimals)).toFixed(2));	  
     loadContractInformation(contractsObject[title]); 	  
