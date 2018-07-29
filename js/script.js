@@ -325,9 +325,11 @@ async function loadContractInformation(arr) {
   let query2 = '#main > div.left-container > div > div > table';
   $(query + ' tr:gt(0)').remove();	
   let name = localStorage.getItem("tradedToken");
-  let tradedTokenAddress = await getTradedToken(arr[name]);
+  let mainTradedToken = await getTradedToken(arr[0]]);
+  let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	  
   for(let i in arr) {
     let contractAddress = arr[i];
+    let tradedTokenAddress = await getTradedToken(contractAddress);
     let commission = await getCommission(contractAddress);
     commission = ((parseInt(commission)/1e18) * 100).toString() + " %";
     let admin = await getAdmin(contractAddress);
@@ -347,8 +349,8 @@ async function loadContractInformation(arr) {
     + "</td></tr>";
     $(query).append(rowHTML);
   }  
-  let userBalance = parseInt(await getUserTokenBalance(tradedTokenAddress));	  
-  let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));	
+  let userBalance = parseInt(await getUserTokenBalance(mainTradedToken));	  
+  let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	
   $('#tradedToken').text(name.toUpperCase());
   $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));		
   initButtonClick();
