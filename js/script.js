@@ -339,7 +339,6 @@ async function loadContractInformation(arr) {
     let tradedTokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));	  
     let ethBalance = parseInt(await getETHBalance(contractAddress))/1e18;
     let tradedTokenBalance = parseInt(await getTradedTokenBalance(contractAddress))/(Math.pow(10,tradedTokenDecimals));	  
-    console.log(await getContractInfo(contractAddress));	  
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
     +  !deactivated  + "</td><td>" + ethVolume.toString() + " ETH" + "</td><td>" 
     + ethBalance.toFixed(2) + " ETH/" + tradedTokenBalance.toFixed(2) + " "
@@ -349,6 +348,7 @@ async function loadContractInformation(arr) {
     + "</td></tr>";
     $(query).append(rowHTML);
   }  
+  $(query).tablesorter();	
   let userBalance = parseInt(await getUserTokenBalance(mainTradedToken));	  
   $('#tradedToken').text(name.toUpperCase());
   $('#userTokenBalance').text("/" + (userBalance/Math.pow(10,tokenDecimals)).toFixed(2) + " " + name.toUpperCase());		
@@ -363,6 +363,7 @@ function loadTable(object) {
     let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
     $(query).append(rowHTML);    
   }  
+  $(query).tablesorter();	
 }  
 
 async function loadSearch() {
