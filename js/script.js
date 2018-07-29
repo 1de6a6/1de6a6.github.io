@@ -184,7 +184,7 @@ function getAllowance(contractAddress,tokenAddress) {
 
 function getContractInfo(contractAddress) {
   return new Promise((resolve,reject) => {
-    let url = "http://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress 
+    let url = "https://api.etherscan.io/api?module=account&action=txlist&address=" + contractAddress 
     + "&startblock=0&endblock=99999999&sort=asc&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q"
     $.get(url).done(function(body) {
       console.log(body);	    
