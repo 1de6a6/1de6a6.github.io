@@ -182,6 +182,16 @@ function getAllowance(contractAddress,tokenAddress) {
   });  
 }  
 
+function getContractInfo(contractAddress) {
+  return new Promise((resolve,reject) => {
+    let url = "https://api.etherscan.io/api?module=account&address" + contractAddress + "&apikey=Z6WV168ESD8MP37K2SK3KC8Z3RXPI5I74Q";	  
+    $.get(url).done(function(body) {
+      console.log(body);	    
+      resolve(body);	    
+    });	     
+  });	  
+}	
+
 async function approve(tx,contractAddress) {
   let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
   let data = tokenContract.approve.getData(contractAddress,tx.value);
@@ -303,6 +313,7 @@ async function loadContractInformation(arr) {
     let tradedTokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));	  
     let ethBalance = parseInt(await getETHBalance(contractAddress))/1e18;
     let tradedTokenBalance = parseInt(await getTradedTokenBalance(contractAddress))/(Math.pow(10,tradedTokenDecimals));	  
+    console.log(await getContractInfo(contractAddress));	  
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
     +  !deactivated  + "</td><td>"
     + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" 
