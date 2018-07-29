@@ -85,7 +85,7 @@
 	    Your Address:&nbsp;<span id="userAddress"></span>
     </div>
     <div class="item">
-	Your Balance:&nbsp;<span id="userBalance"></span>&nbsp;ETH
+	Your Balance:&nbsp;<span id="userBalance"></span>
     </div>	      
   </div>	
 </div>	
@@ -146,8 +146,8 @@ $('.ui.dropdown')
 					element.removeClass("negative");
 					element.addClass("success");
 					element.text("Metamask Unlocked");
-					$('#userAddress').text(userAddress);;  
-					$('#userBalance').text(userBalance);
+					$('#userAddress').text(userAddress);  
+					$('#userBalance').text(userBalance + "&nbsp;ETH");
 				  });	  
 				} else {
 					element.removeClass("success");
