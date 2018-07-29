@@ -316,8 +316,7 @@ async function loadContractInformation(arr) {
     let tradedTokenBalance = parseInt(await getTradedTokenBalance(contractAddress))/(Math.pow(10,tradedTokenDecimals));	  
     console.log(await getContractInfo(contractAddress));	  
     let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
-    +  !deactivated  + "</td><td>"
-    + ethVolume.toString() + " ETH/" + tokenVolume.toString() + " " + name.toUpperCase() + "</td><td>" 
+    +  !deactivated  + "</td><td>" + ethVolume.toString() + " ETH" "</td><td>" 
     + ethBalance.toFixed(2) + " ETH/" + tradedTokenBalance.toFixed(2) + " "
     + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
