@@ -349,7 +349,6 @@ async function loadContractInformation(arr) {
     + "</td></tr>";
     $(query).append(rowHTML);
   }  
-  $(query).tablesorter();	
   let userBalance = parseInt(await getUserTokenBalance(mainTradedToken));	  
   $('#tradedToken').text(name.toUpperCase());
   $('#userTokenBalance').text("/" + (userBalance/Math.pow(10,tokenDecimals)).toFixed(2) + " " + name.toUpperCase());		
@@ -364,7 +363,6 @@ function loadTable(object) {
     let rowHTML = "<tr><td>" + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
     $(query).append(rowHTML);    
   }  
-  $(query).tablesorter();	
 }  
 
 async function loadSearch() {
