@@ -239,7 +239,7 @@ async function initSearchClickListener() {
     let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
     let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
     $('#tradedToken').text(title);
-    $('#userTokenBalance').text((userBalance/(Math.pow(10,tokenDecimals)).toFixed(2));	  	  
+    $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));	  	  
     loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
@@ -251,7 +251,7 @@ async function initTokenTableClickListener() {
     let userBalance = parseInt(await getUserTokenBalance(contractsObject[title]));	  
     let tokenDecimals = parseInt(await getTokenDecimals(contractsObject[title]));	  
     $('#tradedToken').text(title);
-    $('#userTokenBalance').text((userBalance/(Math.pow(10,tokenDecimals)).toFixed(2));	  
+    $('#userTokenBalance').text((userBalance/Math.pow(10,tokenDecimals)).toFixed(2));	  
     loadContractInformation(contractsObject[title]); 	  
   });	  
 }	
