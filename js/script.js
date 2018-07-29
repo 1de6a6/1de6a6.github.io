@@ -222,15 +222,19 @@ function initSearch(array) {
 function initSearchClickListener() {
   $('.ui.search').change(function() {
     let title = $('.title').text();
-    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
     $('#tradedToken').text(title);
+    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));
     loadContractInformation(contractsObject[title]);   
   })
 }                                                                                            
 
 function initTokenTableClickListener() {
   $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
-    console.log(e);	  
+    let title = e.currentTarget.firstChild.innerText;
+    console.log(title);	  
+    $('#tradedToken').text(title);
+    let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  
+    loadContractInformation(contractsObject[title]); 	  
   });	  
 }	
 
