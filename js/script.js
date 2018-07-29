@@ -228,6 +228,12 @@ function initSearchClickListener() {
   })
 }                                                                                            
 
+function initTokenTableClickListener() {
+  $('#main > div.left-container > div > div > table').on('click', function(e) {
+    console.log(e);	  
+  });	  
+}	
+
 async function initBuyClickListener(tx) {
   $('.ui.green.ok.inverted.button').on('click', async function() {
     await sendTransaction({from:tx.from,to:tx.to,value:tx.value});                    
@@ -360,6 +366,7 @@ async function loadSearch() {
   loadTable(tokenObject);
   initSearch(categoryContent);
   localStorage.setItem("tableInformation",JSON.stringify(contractsObject));
+  initTokenTableClickListener();	
   initSearchClickListener();  
 }
  
