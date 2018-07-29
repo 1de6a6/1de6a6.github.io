@@ -251,13 +251,13 @@ function initTokenTableClickListener() {
 }	
 
 async function initBuyClickListener(tx) {
-  $('body > div.ui.dimmer.modals.page.transition.visible.active > div.ui.basic.modal.one.transition.visible.active > div.actions > div.ui.green.ok.inverted.button').on('click', async function() {
+  $('#sendBuy').on('click', async function() {
     await sendTransaction({from:tx.from,to:tx.to,value:tx.value});                    
   });    
 }
 
 async function initSellClickListener(obj) {
-  $('body > div.ui.dimmer.modals.page.transition.visible.active > div.ui.basic.modal.two.transition.visible.active > div.actions > div.ui.green.ok.inverted.button').on('click', async function() { 	  	  
+  $('#sendSell').on('click', async function() { 	  	  
     await approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
     await sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
   });    
