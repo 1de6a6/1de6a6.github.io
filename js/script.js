@@ -281,7 +281,7 @@ async function initButtonClick() {
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), $('#tokenAmount').text(inputValue.toString()),
-      $('#sellPrice').text("Price: " + (((ethBalance + inputValue)/tokenBalance)).toString()), $('.ui.basic.modal.two').modal('show'), 
+      $('#sellPrice').text("Price: " + (((ethBalance + tradeAmount)/tokenBalance)*1e18).toString()), $('.ui.basic.modal.two').modal('show'), 
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}));
   });
