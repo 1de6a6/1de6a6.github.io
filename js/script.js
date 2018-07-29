@@ -199,7 +199,7 @@ async function approve(tx,contractAddress) {
 }
 
 async function getUserTokenBalance(tradedTokenAddress) {
-  let userAddress = localStorage.getItem("userAddress);	
+  let userAddress = localStorage.getItem("userAddress");	
   let tokenContract = web3.eth.contract(tokenContractABI).at(tradedTokenAddress);
   return new Promise((resolve,reject) => {
     tokenContract.balanceOf(userAddress, function(err,body) {
