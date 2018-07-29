@@ -258,6 +258,7 @@ async function initBuyClickListener(tx) {
 
 async function initSellClickListener(obj) {
   $('body > div.ui.dimmer.modals.page.transition.visible.active > div > div.actions > div.ui.green.ok.inverted.button').on('click', async function() { 	  	  
+    console.log("sell")'	  
     await approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
     await sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
   });    
