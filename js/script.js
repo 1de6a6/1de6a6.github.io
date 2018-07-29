@@ -325,7 +325,7 @@ async function loadContractInformation(arr) {
   let query2 = '#main > div.left-container > div > div > table';
   $(query + ' tr:gt(0)').remove();	
   let name = localStorage.getItem("tradedToken");
-  let mainTradedToken = await getTradedToken(arr[0]]);
+  let mainTradedToken = await getTradedToken(arr[0]);
   let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	  
   for(let i in arr) {
     let contractAddress = arr[i];
