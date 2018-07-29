@@ -327,6 +327,7 @@ async function loadContractInformation(arr) {
   let name = localStorage.getItem("tradedToken");
   let mainTradedToken = await getTradedToken(arr[0]);
   let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	  
+  $('#amountTokenName').text(name.toUpperCase());	
   for(let i in arr) {
     let contractAddress = arr[i];
     let tradedTokenAddress = await getTradedToken(contractAddress);
