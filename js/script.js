@@ -274,16 +274,19 @@ async function initButtonClick() {
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = await getTradedTokenBalance(contractAddress);
     let ethBalance = await getETHBalance(contractAddress);
+    let buyPrice,sellPrice; = ethBalance/(tokenBalance + tradeAmount);
     let tradeAmount, ethAmount;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
-    ethAmount = (tradeAmount*ethBalance)/(tokenBalance + tradeAmount),
-    $('#ethAmount').text(ethAmount.toString()),$('#buyPrice').text("Price: " + ((ethBalance/1e18)/((tokenBalance/(Math.pow(10,tokenDecimals))) + tradeAmount/1e8)).toString()), 
+    ethAmount = (tradeAmount*ethBalance)/(tokenBalance + tradeAmount), buyPrice = (ethBalance/(tokenBalance + tradeAmount))/1e18,
+    $('#ethAmount').text(ethAmount.toString()),$('#buyPrice').text("Price: " + buyPrice.toString()),
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount*1e18)}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), $('#tokenAmount').text(inputValue.toString()),
-      $('#sellPrice').text("Price: " + (((ethBalance/1e18 + (tradeAmount/Math.pow(10,tokenDecimals)))/tokenBalance/1e18)).toString()), $('.ui.basic.modal.two').modal('show'), 
+      sellPrice = ((tokenBalance + tradeAmount) / ethBalance)/1e18,
+      $('#sellPrice').text("Price: " + sellPrice.toString()),
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
-			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}));
+			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}),
+      $('.ui.basic.modal.two').modal('show'));
   });
 }  
 
