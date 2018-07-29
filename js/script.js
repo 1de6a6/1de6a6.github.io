@@ -306,7 +306,7 @@ async function loadContractInformation(arr) {
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
     let commission = await getCommission(contractAddress);
-    commission = (parseInt(commission)/1e18).toString() + " %";
+    commission = ((parseInt(commission)/1e18) * 100).toString() + " %";
     let admin = await getAdmin(contractAddress);
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18)).toFixed(2);
     let tokenVolume = (await get24HourVolumeToken(contractAddress)).toFixed(2);
