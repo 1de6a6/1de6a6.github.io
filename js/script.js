@@ -263,12 +263,6 @@ async function initSellClickListener(obj) {
   });    
 }
 
-(ethBalance + ethAmount) / tokenBalance = tokenAmount
-
-(tokenAmount * tokenBalance) - ethBalance = ethAmount
-
-
-
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
