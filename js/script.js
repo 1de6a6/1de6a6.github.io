@@ -262,7 +262,8 @@ async function initSellClickListener(obj) {
     await sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
   });    
 }
-                                                                                                                          
+
+
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
@@ -278,15 +279,15 @@ async function initButtonClick() {
     let buyPrice,sellPrice; 
     let tradeAmount, ethAmount, sellAmountETH;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
-    buyPrice = (ethBalance / (tokenBalance + tradeAmount)) * (1/(Math.pow(10,18-tokenDecimals))) * (1+commission),
+    buyPrice = ((tokenBalance - tradeAmount*ethBalance) / tradeAmount) * (1+commission),
     ethAmount = tradeAmount *  buyPrice,			   
-    $('#ethAmount').text((ethAmount/1e18).toString()),$('#buyPrice').text("Price: " + buyPrice.toString()),
+    $('#ethAmount').text((ethAmount/1e18).toString()),$('#buyPrice').text("Price: " + (buyPrice * (1/1e18)).toString()),
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount)}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), 
-      sellPrice = (ethBalance / (tokenBalance + tradeAmount)) * (1/(Math.pow(10,18-tokenDecimals))) * (1-commission),
-      sellAmountETH = tradeAmount * sellPrice * (1/1e18), $('#tokenAmount').text(sellAmountETH.toString()),
-      $('#sellPrice').text("Price: " + sellPrice.toString()),
+      sellPrice = (ethBalance / (tradeAmount + tokenBalance)) * (1-commission),
+      sellAmountETH = tradeAmount * sellPrice, $('#tokenAmount').text((sellAmountETH * (1/1e18)).toString()),
+      $('#sellPrice').text("Price: " + (sellPrice * (1/1e18)).toString()),
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}),
       $('.ui.basic.modal.two').modal('show'));
