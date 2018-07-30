@@ -278,17 +278,17 @@ async function initButtonClick() {
     let buyPrice,sellPrice; 
     let tradeAmount, ethAmount, sellAmountETH;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),	   
-    buyPrice = (ethBalance / (tokenBalance + tradeAmount)),
+    buyPrice = (ethBalance / (tokenBalance + tradeAmount)) * (1+commission),
     ethAmount = tradeAmount * buyPrice,			   
     $('#ethAmount').text((ethAmount/1e18).toString()),
-    $('#buyPrice').text("Price: " + (buyPrice*(1+commission)*Math.pow(10,tokenDecimals-18)).toString()),
+    $('#buyPrice').text("Price: " + (buyPrice*Math.pow(10,tokenDecimals-18)).toString()),
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount)}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = inputValue * Math.pow(10,tokenDecimals), 
-      sellPrice = (ethBalance / (tradeAmount + tokenBalance)),
+      sellPrice = (ethBalance / (tradeAmount + tokenBalance)) * (1+commission),
       sellAmountETH = tradeAmount * sellPrice,
       $('#tokenAmount').text((sellAmountETH/1e18).toString()),
-      $('#sellPrice').text("Price: " + (sellPrice*(1-commission)*Math.pow(10,tokenDecimals-18)).toString()),
+      $('#sellPrice').text("Price: " + (sellPrice*Math.pow(10,tokenDecimals-18)).toString()),
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}),
       $('.ui.basic.modal.two').modal('show'));
