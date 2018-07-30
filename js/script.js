@@ -263,12 +263,6 @@ async function initSellClickListener(obj) {
   });    
 }
 
-return (traded_token_balance.mul(_amount)).div(eth_balance_plus_amount_);
-
-tokenBalance / (ethBalance + ethAmount) = tokenAmount
-(tokenBalance / tokenAmount) = ethBalance + ethAmount
-(tokenBalance / tokenAmount) - ethBalance = ethAmount
-
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
