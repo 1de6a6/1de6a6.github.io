@@ -263,6 +263,12 @@ async function initSellClickListener(obj) {
   });    
 }
 
+(ethBalance + ethAmount) / tokenBalance = tokenAmount
+
+(tokenAmount * tokenBalance) - ethBalance = ethAmount
+
+
+
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
@@ -278,7 +284,7 @@ async function initButtonClick() {
     let buyPrice,sellPrice; 
     let tradeAmount, ethAmount, sellAmountETH;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
-    buyPrice = ((tokenBalance / tradeAmount) - ethBalance) * (1+commission),
+    buyPrice = ((tradeAmount * tokenBalance) - ethBalance)  * (1+commission),
     ethAmount = tradeAmount *  buyPrice,			   
     $('#ethAmount').text(ethAmount.toString()),$('#buyPrice').text("Price: " + buyPrice.toString()),
     await initBuyClickListener({from:userAddress,to:contractAddress,value:parseInt(ethAmount)}),
