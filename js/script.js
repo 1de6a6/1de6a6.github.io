@@ -278,7 +278,7 @@ async function initButtonClick() {
     let buyPrice,sellPrice; 
     let tradeAmount, ethAmount, sellAmountETH;
     tradeType === "Buy" ? (tradeAmount = inputValue * Math.pow(10,tokenDecimals),
-    buyPrice = (ethBalance) / ((tokenBalance * (1 - commission)) - tradeAmount)			   
+    buyPrice = (ethBalance) / ((tokenBalance * (1 - commission)) - tradeAmount),			   
     ethAmount = tradeAmount * buyPrice,			   
     $('#ethAmount').text((ethAmount/1e18).toString()),
     $('#buyPrice').text("Price: " + (buyPrice*Math.pow(10,tokenDecimals-18)).toString()),
