@@ -274,11 +274,11 @@ async function initButtonClick() {
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = new BigNumber(await getTradedTokenBalance(contractAddress));
     let ethBalance = new BigNumber(await getETHBalance(contractAddress));	  
-    let commission = parseInt(await getCommission(contractAddress));	  
+    let commission = new BigNumber((new BigNumber(1e18)).minus(await getCommission(contractAddress))).div(1e18);	  
     let buyPrice,sellPrice; 
     let tradeAmount, ethAmount, sellAmountETH;
     tradeType === "Buy" ? (tradeAmount = (new BigNumber(inputValue)).multipliedBy(Math.pow(10,tokenDecimals)),
-    buyPrice = ((ethBalance.dividedBy(tokenBalance.multipliedBy(new BigNumber(commission).dividedBy(1e18))))).minus(tradeAmount),			   
+    buyPrice = ethBalance.dividedBy((tokenBalance.multipliedBy(commission)).minus(tradeAmount)),
     ethAmount = tradeAmount.multipliedBy(buyPrice),		
     console.log(buyPrice,ethAmount,parseFloat(ethAmount)),			   
     $('#ethAmount').text((parseFloat(ethAmount)/1e18).toString()),
@@ -286,7 +286,7 @@ async function initButtonClick() {
     await initBuyClickListener({from:userAddress,to:contractAddress,value:ethAmount}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = (new BigNumber(inputValue)).multipliedBy(Math.pow(10,tokenDecimals)), 
-      sellPrice = (ethBalance.dividedBy(tradeAmount.multipliedBy(tokenBalance))).multipliedBy(new BigNumber(commission).dividedBy(1e18)),
+      sellPrice = (ethBalance.dividedBy(tradeAmount.multipliedBy(tokenBalance))).multiplied(commission),
       sellAmountETH = tradeAmount.multipliedBy(sellPrice),
       $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
       $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
