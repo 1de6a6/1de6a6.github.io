@@ -283,7 +283,7 @@ function toFixed(x) {
 
 function initEtherscanLink() {
   $('.etherscan').on('click', function(e) {
-    console.log($(e.currentTarget).text());
+    window.open("https://etherscan.com/address/" + (e.currentTarget).text(),"_blank");
   });	  
 }
 
@@ -381,6 +381,7 @@ async function loadContractInformation(arr) {
     + '<div class="ui large buttons"> <button class="ui button">Buy</button> <div class="or"></div> <button class="ui button">Sell</button> </div>'  
     + "</td></tr>";
     $(query).append(rowHTML);
+    initEtherscanLink();	  
   }  
   let userBalance = parseInt(await getUserTokenBalance(mainTradedToken));	  
   $('#tradedToken').text(name.toUpperCase());
