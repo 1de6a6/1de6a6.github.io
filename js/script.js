@@ -281,6 +281,12 @@ function toFixed(x) {
   return x.toString().split(".")[0];
 }
 
+function initEtherscanLink() {
+  $('.etherscan').on('click', function(e) {
+    console.log($(e.currentTarget).text());
+  });	  
+}
+
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
@@ -367,7 +373,7 @@ async function loadContractInformation(arr) {
     let tradedTokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));	  
     let ethBalance = parseInt(await getETHBalance(contractAddress))/1e18;
     let tradedTokenBalance = parseInt(await getTradedTokenBalance(contractAddress))/(Math.pow(10,tradedTokenDecimals));	  
-    let rowHTML = "<tr><td>" + admin + "</td><td>" + contractAddress + "</td><td>"
+    let rowHTML = '<tr><td class="etherscan">' + admin + '</td><td class="etherscan">' + contractAddress + "</td><td>"
     +  !deactivated  + "</td><td>" + ethVolume.toString() + " ETH" + "</td><td>" 
     + ethBalance.toFixed(2) + " ETH/" + tradedTokenBalance.toFixed(2) + " "
     + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
@@ -420,5 +426,6 @@ async function loadSearch() {
 }
  
 $(document).ready(function() {
-  loadSearch();
+initEtherscanLink();
+loadSearch();
 });  
