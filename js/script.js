@@ -263,6 +263,24 @@ async function initSellClickListener(obj) {
   });    
 }
 
+function toFixed(x) {
+  if (Math.abs(x) < 1.0) {
+    var e = parseInt(x.toString().split('e-')[1]);
+    if (e) {
+        x *= Math.pow(10,e-1);
+        x = '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+    }
+  } else {
+    var e = parseInt(x.toString().split('+')[1]);
+    if (e > 20) {
+        e -= 20;
+        x /= Math.pow(10,e);
+        x += (new Array(e+1)).join('0');
+    }
+  }
+  return x;
+}
+
 async function initButtonClick() {
   $('.ui.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
@@ -280,10 +298,10 @@ async function initButtonClick() {
     tradeType === "Buy" ? (tradeAmount = (new BigNumber(inputValue)).multipliedBy(Math.pow(10,tokenDecimals)),
     buyPrice = ethBalance.dividedBy((tokenBalance.multipliedBy(commission)).minus(tradeAmount)),
     ethAmount = tradeAmount.multipliedBy(buyPrice),		
-    console.log(buyPrice,ethAmount,parseFloat(ethAmount)),			   
+    console.log(buyPrice,ethAmount,toFixed(parseFloat(ethAmount))),			   
     $('#ethAmount').text((parseFloat(ethAmount)/1e18).toString()),
     $('#buyPrice').text("Price: " + (parseFloat(buyPrice)*Math.pow(10,tokenDecimals-18)).toString()),
-    await initBuyClickListener({from:userAddress,to:contractAddress,value:ethAmount}),
+    await initBuyClickListener({from:userAddress,to:contractAddress,value:toFixed(parseFloat(ethAmount))}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = (new BigNumber(inputValue)).multipliedBy(Math.pow(10,tokenDecimals)), 
       sellPrice = (ethBalance.dividedBy(tradeAmount.multipliedBy(tokenBalance))).multiplied(commission),
@@ -291,7 +309,7 @@ async function initButtonClick() {
       $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
       $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
-			      tradeAmount:tradeAmount, contractAddress:contractAddress, tradeAmount:tradeAmount}),
+			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(tradeAmount))}),
       $('.ui.basic.modal.two').modal('show'));
   });
 }  
