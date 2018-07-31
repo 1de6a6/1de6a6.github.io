@@ -278,7 +278,7 @@ function toFixed(x) {
         x += (new Array(e+1)).join('0');
     }
   }
-  return x.split(".")[0];
+  return x.toString().split(".")[0];
 }
 
 async function initButtonClick() {
