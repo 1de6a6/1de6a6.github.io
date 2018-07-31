@@ -272,20 +272,20 @@ async function initButtonClick() {
     let contractAddress = $(html.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling).text();
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
-    let tokenBalance = parseInt(await getTradedTokenBalance(contractAddress));
-    let ethBalance = parseInt(await getETHBalance(contractAddress));	  
+    let tokenBalance = new BigNumber(await getTradedTokenBalance(contractAddress));
+    let ethBalance = new BigNumber(await getETHBalance(contractAddress));	  
     let commission = parseInt(await getCommission(contractAddress));	  
     let buyPrice,sellPrice; 
     let tradeAmount, ethAmount, sellAmountETH;
     tradeType === "Buy" ? (tradeAmount = (new BigNumber(inputValue)).mul(Math.pow(10,tokenDecimals)),
-    buyPrice = (new BigNumber(ethBalance)).div((tokenBalance.mul(commission)).div(1e18).sub(tradeAmount)),			   
+    buyPrice = ((ethBalance.div(tokenBalance.mul(commission))).div(1e18)).sub(tradeAmount),			   
     ethAmount = tradeAmount.mul(buyPrice),			   
     $('#ethAmount').text((parseFloat(ethAmount)/1e18).toString()),
     $('#buyPrice').text("Price: " + (parseFloat(buyPrice)*Math.pow(10,tokenDecimals-18)).toString()),
     await initBuyClickListener({from:userAddress,to:contractAddress,value:ethAmount}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = (new BigNumber(inputValue)).mul(Math.pow(10,tokenDecimals)), 
-      sellPrice = ((new BigNumber(ethBalance)).mul(commission)).div(tradeAmount.mul(tokenBalance))).div(1e18),
+      sellPrice = ((ethBalance.mul(commission)).div(tradeAmount.mul(tokenBalance))).div(1e18),
       sellAmountETH = tradeAmount.mul(sellPrice),
       $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
       $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
