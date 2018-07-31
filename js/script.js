@@ -304,7 +304,7 @@ async function initButtonClick() {
     await initBuyClickListener({from:userAddress,to:contractAddress,value:toFixed(parseFloat(ethAmount))}),
     $('.ui.basic.modal.one').modal('show'))
     : (tradeAmount = (new BigNumber(inputValue)).multipliedBy(Math.pow(10,tokenDecimals)), 
-      sellPrice = (ethBalance.dividedBy(tradeAmount.multipliedBy(tokenBalance))).multiplied(commission),
+      sellPrice = (ethBalance.dividedBy(tradeAmount.multipliedBy(tokenBalance))).multipliedBy(commission),
       sellAmountETH = tradeAmount.multipliedBy(sellPrice),
       $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
       $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
