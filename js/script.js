@@ -283,7 +283,7 @@ function toFixed(x) {
 
 function initEtherscanLink() {
   $('.etherscan').on('click', function(e) {
-    window.open("https://etherscan.com/address/" + (e.currentTarget).text(),"_blank");
+    window.open("https://etherscan.com/address/" + $(e.currentTarget).text(),"_blank");
   });	  
 }
 
