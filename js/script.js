@@ -195,7 +195,7 @@ function getContractInfo(contractAddress) {
 async function approve(tx,contractAddress) {
   let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
   let data = tokenContract.approve.getData(contractAddress,tx.value);
-  await sendAwaitConfirmations({from:tx.from,to:tx.to,data:data});
+  await sendTransaction({from:tx.from,to:tx.to,data:data,gasLimit:250000});
 }
 
 async function getUserTokenBalance(tradedTokenAddress) {
