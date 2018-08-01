@@ -9,7 +9,7 @@ function sendAwaitConfirmations(tx) {
 			filter.watch(function(error, result) {
 				if (!error) {
 					web3.eth.getBlockNumber(function(err, blockNumber) {
-						web3.eth.getBlock(parseInt(blockNumber) - 1, function(err, confirmedBlock) {
+						web3.eth.getBlock(parseInt(blockNumber) - 5, function(err, confirmedBlock) {
 							if (confirmedBlock.transactions.length > 0) {
 								confirmedBlock.transactions.forEach(function(txId) {
 									web3.eth.getTransaction(txId, function(err, transaction) {
