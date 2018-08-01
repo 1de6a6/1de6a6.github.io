@@ -41,6 +41,17 @@ function sendTransaction(tx) {
   });
 }  
                 
+function sendTransactionData(tx) {
+  return new Promise((resolve,reject) => {
+    web3.eth.sendTransaction({from:tx.from,to:tx.to,data:tx.data}, function(err,val) {
+      if(!err) {
+        resolve(val);
+      } else {
+          reject(err);
+      }
+    });
+  });
+}  
 
 function getBlockNumber() {
   return new Promise((resolve,reject) => {
@@ -195,7 +206,7 @@ function getContractInfo(contractAddress) {
 async function approve(tx,contractAddress) {
   let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
   let data = tokenContract.approve.getData(contractAddress,tx.value);
-  await sendAwaitConfirmations({from:tx.from,to:tx.to,data:data});
+  await sendTransactionData({from:tx.from,to:tx.to,data:data});
 }
 
 async function getUserTokenBalance(tradedTokenAddress) {
