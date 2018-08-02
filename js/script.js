@@ -207,6 +207,19 @@ function approveAndSell(approveTx,sellTokensTx,contractAddress) {
   batch.execute();	
 }	
 
+function approveAndSell2(approveTx,sellTokensTx,contractAddress) {
+  const cb = (e) => {
+    console.log(e,arguments, 'callback from batch tx')
+  }	
+  let tokenContract = web3.eth.contract(tokenContractABI).at(approveTx.to);
+  let data = tokenContract.approve.getData(contractAddress,approveTx.value);
+  web3.eth.sendTransaction({ from: approveTx.from, to: approveTx.to, data:data, gas:250000, value: 0 });
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(sellTokensTx.to);
+  let data1 = liquidityContract.sell_tokens.getData(sellTokensTx.value);
+  setTimeout(function() {	
+    web3.eth.sendTransaction({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1, gas:250000});
+  }, 2000);	  
+}
 
 async function getUserTokenBalance(tradedTokenAddress) {
   let userAddress = localStorage.getItem("userAddress");	
@@ -268,7 +281,7 @@ async function initBuyClickListener(tx) {
 
 function initSellClickListener(obj) {
   $('#sendSell').on('click', function() { 	  	                     
-    approveAndSell({from:obj.userAddress, to:obj.tradedTokenAddress, value:obj.tradeAmount},
+    approveAndSell2({from:obj.userAddress, to:obj.tradedTokenAddress, value:obj.tradeAmount},
 	{from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});
   });    
 }
