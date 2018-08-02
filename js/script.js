@@ -291,7 +291,7 @@ function initEtherscanLink() {
 }
 
 async function initButtonClick() {
-  $("#buyButton, #sellButton").on('click', async function(e) {
+  $(".ui.ok.button").on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
@@ -386,7 +386,7 @@ async function loadContractInformation(arr) {
     + ethBalance.toFixed(2) + " ETH/" + tradedTokenBalance.toFixed(2) + " "
     + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
-    + '<div class="ui large buttons"> <button class="ui button">Buy</button> <div class="or"></div> <button class="ui button">Sell</button> </div>'  
+    + '<div class="ui large buttons"> <button class="ui ok button">Buy</button> <div class="or"></div> <button class="ui ok button">Sell</button> </div>'  
     + "</td></tr>";
     $(query).append(rowHTML);
     initEtherscanLink();	  
