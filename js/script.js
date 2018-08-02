@@ -257,12 +257,6 @@ async function initBuyClickListener(tx) {
   });    
 }
 
-function initCancelClickListener(tx) {
-  $("div:visible[id*='cancelTx']").on('click', function() {
-    window.location.reload(false);	   
-  });	  
-}	
-
 async function initSellClickListener(obj) {
   $('#sendSell').on('click', async function() { 	  	  
     approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
@@ -297,15 +291,12 @@ function initEtherscanLink() {
 }
 
 async function initButtonClick() {
-  $('.ui.button').on('click', async function(e) {
+  $('.ui.ok.button').on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
     let userAddress = localStorage.getItem("userAddress");
-    let contractAddress;
-    try {	  
-      contractAddress = $(html.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling).text();
-    } catch(e) {}	    
+    let contractAddress = $(html.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling).text();
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = new BigNumber(await getTradedTokenBalance(contractAddress));
