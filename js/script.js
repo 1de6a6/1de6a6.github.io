@@ -395,7 +395,6 @@ async function loadContractInformation(arr) {
   $('#tradedToken').text(name.toUpperCase());
   $('#userTokenBalance').text("/" + (userBalance/Math.pow(10,tokenDecimals)).toFixed(2) + " " + name.toUpperCase());		
   initButtonClick();
-  initCancelClickListener();	
 }  
 
 function loadTable(object) {
