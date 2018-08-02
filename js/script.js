@@ -257,6 +257,12 @@ async function initBuyClickListener(tx) {
   });    
 }
 
+function initCancelClickListener(tx) {
+  $('#cancelTx').on('click', function() {
+    window.reload();	   
+  });	  
+}	
+
 async function initSellClickListener(obj) {
   $('#sendSell').on('click', async function() { 	  	  
     approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
@@ -395,6 +401,7 @@ async function loadContractInformation(arr) {
   $('#tradedToken').text(name.toUpperCase());
   $('#userTokenBalance').text("/" + (userBalance/Math.pow(10,tokenDecimals)).toFixed(2) + " " + name.toUpperCase());		
   initButtonClick();
+  initCancelClickListener();	
 }  
 
 function loadTable(object) {
