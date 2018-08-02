@@ -389,13 +389,15 @@ async function loadContractInformation(arr) {
     let ethBalance = parseInt(await getETHBalance(contractAddress))/1e18;
     let tradedTokenBalance = parseInt(await getTradedTokenBalance(contractAddress))/(Math.pow(10,tradedTokenDecimals));	  
     let rowHTML = '<tr><td class="etherscan">' + admin + '</td><td class="etherscan">' + contractAddress + "</td><td>"
-    +  !deactivated  + "</td><td>" + ethVolume.toString() + " ETH" + "</td><td>" 
+    + ethVolume.toString() + " ETH" + "</td><td>" 
     + ethBalance.toFixed(2) + " ETH/" + tradedTokenBalance.toFixed(2) + " "
     + name.toUpperCase() + "</td><td>" + commission + "</td><td>"
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
     + '<div class="ui large buttons"> <button class="ui ok button">Buy</button> <div class="or"></div> <button class="ui ok button">Sell</button> </div>'  
     + "</td></tr>";
-    $(query).append(rowHTML);
+    if(!deactivated) {	  
+      $(query).append(rowHTML);
+    }	    
     initEtherscanLink();	  
   }  
   let userBalance = parseInt(await getUserTokenBalance(mainTradedToken));	  
