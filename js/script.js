@@ -259,7 +259,7 @@ async function initBuyClickListener(tx) {
 
 function initCancelClickListener(tx) {
   $("div:visible[id*='cancelTx']");.on('click', function() {
-    window.reload();	   
+    window.location.reload();	   
   });	  
 }	
 
