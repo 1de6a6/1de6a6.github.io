@@ -79,17 +79,9 @@ function getTradedToken(address) {
 }
 
 function sellTokens(tx) {
-  return new Promise((resolve,reject) => {
-    let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
-    let data = liquidityContract.sell_tokens.getData(tx.value);
-    web3.eth.sendTransaction({from:tx.from,to:tx.to,data:data},function(err,body) {
-      if(!err) {
-        resolve(body);
-      }  else {
-           reject(err);
-      }
-    });
-  });  
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
+  let data = liquidityContract.sell_tokens.getData(tx.value);
+  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data, value: 0 });
 }
 
 
@@ -203,10 +195,10 @@ function getContractInfo(contractAddress) {
   });	  
 }	
 
-async function approve(tx,contractAddress) {
+function approve(tx,contractAddress) {
   let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
   let data = tokenContract.approve.getData(contractAddress,tx.value);
-  await sendTransactionData({from:tx.from,to:tx.to,data:data});
+  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data, gasPrice:5*1e19, gasLimit:250000, value: 0 });
 }
 
 async function getUserTokenBalance(tradedTokenAddress) {
@@ -267,10 +259,14 @@ async function initBuyClickListener(tx) {
   });    
 }
 
-async function initSellClickListener(obj) {
-  $('#sendSell').on('click', async function() { 	  	  
-    await approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
-    await sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
+function initSellClickListener(obj) {
+  $('#sendSell').on('click', function() { 	  	  
+    let tx = approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
+    let tx1 = sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
+    let batch = web3.createBatch();
+    batch.add(tx1);
+    batch.add(tx);
+    batch.execute();	  
   });    
 }
 
@@ -324,7 +320,7 @@ async function initButtonClick() {
        sellAmountETH = tradeAmount.multipliedBy(sellPrice),
        $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
        $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
-       await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
+       initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(new BigNumber(tradeAmount)))}),
       $('.ui.basic.modal.two').modal('show'));
   });
