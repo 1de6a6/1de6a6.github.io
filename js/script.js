@@ -418,7 +418,8 @@ function loadTable(object) {
     let name = i;
     let tokenAddress = localStorage.getItem(name);	  
     let tokenVolume = object[i];
-    let rowHTML = '<tr><td' + 'class="leftTable" address="' + tokenAddress + '">' + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
+    let rowHTML = '<tr><td class="leftTable" address="' + tokenAddress + '">' + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
+    console.log(rowHTML);	  
     $(query).append(rowHTML);   
   }  
   initLeftTableClickListener();	  	
