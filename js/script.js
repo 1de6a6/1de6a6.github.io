@@ -302,7 +302,10 @@ async function initButtonClick() {
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
     let userAddress = localStorage.getItem("userAddress");
-    let contractAddress = $(html.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling).text();
+    let contractAddress;
+    try {	  
+      contractAddress = $(html.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling).text();
+    } catch(e) {}	    
     let tradedTokenAddress = await getTradedToken(contractAddress);   
     let tokenDecimals = parseInt(await getTokenDecimals(tradedTokenAddress));
     let tokenBalance = new BigNumber(await getTradedTokenBalance(contractAddress));
