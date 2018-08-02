@@ -81,7 +81,8 @@ function getTradedToken(address) {
 function sellTokens(tx) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
   let data = liquidityContract.sell_tokens.getData(tx.value);
-  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data});
+  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data},
+      cb.bind(this, 'second'));     
 }
 
 
@@ -193,12 +194,17 @@ function getContractInfo(contractAddress) {
       resolve(body);	    
     });	     
   });	  
-}	
+}
 
+const cb = (e) => {
+  console.log(e,arguments, 'callback from batch tx')
+}
+    
 function approve(tx,contractAddress) {
   let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
   let data = tokenContract.approve.getData(contractAddress,tx.value);
-  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data, gasPrice:5*1e19, gasLimit:250000, value: 0 });
+  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data, gasPrice:5*1e9, gasLimit:250000, value: 0 }, 
+    cb.bind(this, 'first'))     
 }
 
 async function getUserTokenBalance(tradedTokenAddress) {
