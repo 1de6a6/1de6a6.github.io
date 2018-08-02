@@ -436,9 +436,9 @@ async function loadSearch() {
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18));
-    tokenObject[name] = {};	  
+    tokenObject[name] ? tokenObject[name] : tokenObject[name] = {};	  
     tokenObject[name]['volume'] ? tokenObject[name]['volume'] += ethVolume : (tokenObject[name]['volume'] = 0, tokenObject[name]['volume'] += ethVolume);  
-    tokenObject['address'] = tradedTokenAddress;	  
+    tokenObject['address'] ? true : tokenObject['address'] = tradedTokenAddress;	  
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
