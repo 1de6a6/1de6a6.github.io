@@ -78,14 +78,6 @@ function getTradedToken(address) {
   });  
 }
 
-function sellTokens(tx) {
-  let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
-  let data = liquidityContract.sell_tokens.getData(tx.value);
-  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data},
-      cb.bind(this, 'second'));     
-}
-
-
 function isDeactivated(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
   return new Promise((resolve,reject) => {
@@ -196,16 +188,25 @@ function getContractInfo(contractAddress) {
   });	  
 }
 
-const cb = (e) => {
-  console.log(e,arguments, 'callback from batch tx')
-}
-    
-function approve(tx,contractAddress) {
-  let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
-  let data = tokenContract.approve.getData(contractAddress,tx.value);
-  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data, gasPrice:5*1e9, gasLimit:250000, value: 0 }, 
-    cb.bind(this, 'first'))     
-}
+
+function approveAndSell(approveTx,sellTokensTx,contractAddress) {
+  const cb = (e) => {
+    console.log(e,arguments, 'callback from batch tx')
+  }	
+  let tokenContract = web3.eth.contract(tokenContractABI).at(approveTx.to);
+  let data = tokenContract.approve.getData(contractAddress,approveTx.value);
+  let tx = web3.eth.sendTransaction.request({ from: approveTx.from, to: approveTx.to, data:data, gas:250000, value: 0 }, 
+    cb.bind(this, 'first'));
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(sellTokensTx.to);
+  let data1 = liquidityContract.sell_tokens.getData(sellTokensTx.value);
+  let tx1 = web3.eth.sendTransaction.request({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1},
+      cb.bind(this, 'second'));    
+  let batch = web3.createBatch();
+  batch.add(tx);
+  batch.add(tx1);
+  batch.execute();	
+}	
+
 
 async function getUserTokenBalance(tradedTokenAddress) {
   let userAddress = localStorage.getItem("userAddress");	
@@ -266,13 +267,9 @@ async function initBuyClickListener(tx) {
 }
 
 function initSellClickListener(obj) {
-  $('#sendSell').on('click', function() { 	  	  
-    let tx = approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
-    let tx1 = sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
-    let batch = web3.createBatch();
-    batch.add(tx);
-    batch.add(tx1);
-    batch.execute();	  
+  $('#sendSell').on('click', function() { 	  	                     
+    approveAndSell({from:obj.userAddress, to:obj.tradedTokenAddress, value:obj.tradeAmount},
+	{from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});
   });    
 }
 
