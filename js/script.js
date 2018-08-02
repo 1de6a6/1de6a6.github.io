@@ -42,14 +42,12 @@ function sendTransaction(tx) {
 }  
                 
 function sendTransactionData(tx) {
-  return new Promise((resolve,reject) => {
-    web3.eth.sendTransaction({from:tx.from,to:tx.to,data:tx.data}, function(err,val) {
-      if(!err) {
-        resolve(val);
-      } else {
-          reject(err);
-      }
-    });
+  web3.eth.sendTransaction({from:tx.from,to:tx.to,data:tx.data}, function(err,val) {
+    if(!err) {
+      console.log(val);
+    } else {
+        console.log(err);
+    }
   });
 }  
 
@@ -77,6 +75,13 @@ function getTradedToken(address) {
     });
   });  
 }
+
+function sellTokens(tx) {
+  let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
+  let data = liquidityContract.sell_tokens.getData(tx.value);
+  sendTransactionData({from:tx.from,to:tx.to,data:data}); 
+}
+
 
 function isDeactivated(address) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(address);
@@ -186,39 +191,12 @@ function getContractInfo(contractAddress) {
       resolve(body);	    
     });	     
   });	  
-}
-
-
-function approveAndSell(approveTx,sellTokensTx,contractAddress) {
-  const cb = (e) => {
-    console.log(e,arguments, 'callback from batch tx')
-  }	
-  let tokenContract = web3.eth.contract(tokenContractABI).at(approveTx.to);
-  let data = tokenContract.approve.getData(contractAddress,approveTx.value);
-  let tx = web3.eth.sendTransaction.request({ from: approveTx.from, to: approveTx.to, data:data, gas:250000, value: 0 }, 
-    cb.bind(this, 'first'));
-  let liquidityContract = web3.eth.contract(liquidityContractABI).at(sellTokensTx.to);
-  let data1 = liquidityContract.sell_tokens.getData(sellTokensTx.value);
-  let tx1 = web3.eth.sendTransaction.request({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1, gas:250000},
-      cb.bind(this, 'second'));    
-  let batch = web3.createBatch();
-  batch.add(tx);
-  batch.add(tx1);
-  batch.execute();	
 }	
 
-function approveAndSell2(approveTx,sellTokensTx,contractAddress) {
-  const cb = (e) => {
-    console.log(e,arguments, 'callback from batch tx')
-  }	
-  let tokenContract = web3.eth.contract(tokenContractABI).at(approveTx.to);
-  let data = tokenContract.approve.getData(contractAddress,approveTx.value);
-  web3.eth.sendTransaction({ from: approveTx.from, to: approveTx.to, data:data, gas:250000, value: 0 });
-  let liquidityContract = web3.eth.contract(liquidityContractABI).at(sellTokensTx.to);
-  let data1 = liquidityContract.sell_tokens.getData(sellTokensTx.value);
-  setTimeout(function() {	
-    web3.eth.sendTransaction({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1, gas:250000});
-  }, 2000);	  
+function approve(tx,contractAddress) {
+  let tokenContract = web3.eth.contract(tokenContractABI).at(tx.to);
+  let data = tokenContract.approve.getData(contractAddress,tx.value);
+  sendTransactionData({from:tx.from,to:tx.to,data:data});
 }
 
 async function getUserTokenBalance(tradedTokenAddress) {
@@ -279,10 +257,12 @@ async function initBuyClickListener(tx) {
   });    
 }
 
-function initSellClickListener(obj) {
-  $('#sendSell').on('click', function() { 	  	                     
-    approveAndSell2({from:obj.userAddress, to:obj.tradedTokenAddress, value:obj.tradeAmount},
-	{from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});
+async function initSellClickListener(obj) {
+  $('#sendSell').on('click', async function() { 	  	  
+    approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
+    setTimeout(function(){	  
+      sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});
+    },2000);	    
   });    
 }
 
@@ -336,7 +316,7 @@ async function initButtonClick() {
        sellAmountETH = tradeAmount.multipliedBy(sellPrice),
        $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
        $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
-       initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
+       await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(new BigNumber(tradeAmount)))}),
       $('.ui.basic.modal.two').modal('show'));
   });
