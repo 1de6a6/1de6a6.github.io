@@ -42,7 +42,7 @@ function sendTransaction(tx) {
 }  
                 
 function sendTransactionData(tx) {
-  web3.eth.sendTransaction({from:tx.from,to:tx.to,data:tx.data}, function(err,val) {
+  web3.eth.sendTransaction({from:tx.from,to:tx.to,data:tx.data,gas:250000}, function(err,val) {
     if(!err) {
       console.log(val);
     } else {
