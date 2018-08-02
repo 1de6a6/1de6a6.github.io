@@ -416,8 +416,9 @@ function loadTable(object) {
   let query = '#main > div.left-container > div > div > table';   
   for(let i in object) {
     let name = i;
-    let tokenVolume = object[i]['volume'];
-    let rowHTML = '<tr><td' + 'class="leftTable" address="' + object[i]['address'] + '">' + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
+    let tokenAddress = localStorage.getItem(name);	  
+    let tokenVolume = object[i];
+    let rowHTML = '<tr><td' + 'class="leftTable" address="' + tokenAddress + '">' + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
     $(query).append(rowHTML);   
   }  
   initLeftTableClickListener();	  	
@@ -435,10 +436,9 @@ async function loadSearch() {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
     let name = await getTokenName(tradedTokenAddress);
+    localStorage.getItem(name,tradedTokenAddress);	  
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18));
-    tokenObject[name] ? tokenObject[name] : tokenObject[name] = {};	  
-    tokenObject[name]['volume'] ? tokenObject[name]['volume'] += ethVolume : (tokenObject[name]['volume'] = 0, tokenObject[name]['volume'] += ethVolume);  
-    tokenObject['address'] ? true : tokenObject['address'] = tradedTokenAddress;	  
+    tokenObject[name] ? tokenObject[name] += ethVolume : (tokenObject[name] = 0, tokenObject[name] += ethVolume);  
     let searchObject = {'title':name};
     if(!~categoryContent.indexOf(searchObject)) {
       categoryContent.push(searchObject);
