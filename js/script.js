@@ -199,7 +199,7 @@ function approveAndSell(approveTx,sellTokensTx,contractAddress) {
     cb.bind(this, 'first'));
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(sellTokensTx.to);
   let data1 = liquidityContract.sell_tokens.getData(sellTokensTx.value);
-  let tx1 = web3.eth.sendTransaction.request({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1},
+  let tx1 = web3.eth.sendTransaction.request({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1, gas:250000},
       cb.bind(this, 'second'));    
   let batch = web3.createBatch();
   batch.add(tx);
