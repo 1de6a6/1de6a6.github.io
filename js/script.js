@@ -290,8 +290,15 @@ function initEtherscanLink() {
   });	  
 }
 
+async function initCancelReload() {
+  $('[id=cancelTx]').on('click', async function() {
+    await Promise.resolve(window.location.reload(false));	  
+  });
+}	
+
 async function initButtonClick() {
   $(".ui.ok.button").on('click', async function(e) {
+    await initCancelReload();	  
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
