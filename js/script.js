@@ -216,7 +216,7 @@ function approveAndSell2(approveTx,sellTokensTx,contractAddress) {
   web3.eth.sendTransaction({ from: approveTx.from, to: approveTx.to, data:data, gas:250000, value: 0 });
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(sellTokensTx.to);
   let data1 = liquidityContract.sell_tokens.getData(sellTokensTx.value);
-  setTimeout(function() {	
+  setInterval(function() {	
     web3.eth.sendTransaction({ from: sellTokensTx.from, to: sellTokensTx.to, data:data1, gas:250000});
   }, 2000);	  
 }
