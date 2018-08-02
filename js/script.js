@@ -81,7 +81,7 @@ function getTradedToken(address) {
 function sellTokens(tx) {
   let liquidityContract = web3.eth.contract(liquidityContractABI).at(tx.to);
   let data = liquidityContract.sell_tokens.getData(tx.value);
-  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data, value: 0 });
+  return web3.eth.sendTransaction.request({ from: tx.from, to: tx.to, data:data});
 }
 
 
@@ -264,8 +264,8 @@ function initSellClickListener(obj) {
     let tx = approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
     let tx1 = sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});                    
     let batch = web3.createBatch();
-    batch.add(tx1);
     batch.add(tx);
+    batch.add(tx1);
     batch.execute();	  
   });    
 }
