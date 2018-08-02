@@ -291,7 +291,7 @@ function initEtherscanLink() {
 }
 
 async function initButtonClick() {
-  $("#sendBuy, #sendSell").on('click', async function(e) {
+  $("#buyButton, #sellButton").on('click', async function(e) {
     let tradeType = $(e.currentTarget).text();
     let html = $(e.currentTarget)[0].offsetParent.previousSibling; 
     let inputValue = parseFloat($(html).find('input').val());
