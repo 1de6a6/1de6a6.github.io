@@ -261,6 +261,7 @@ function toFixed(x) {
 
 function initEtherscanLink() {
   $('.etherscan').on('click', function(e) {
+    console.log("here ",$(e.currentTarget).text());	  
     window.open("https://etherscan.com/address/" + $(e.currentTarget).text(),"_blank");
   });	  
 }
