@@ -235,11 +235,9 @@ async function initBuyClickListener(tx) {
 async function initSellClickListener(obj) {
   $('#sendSell').on('click', async function() { 	  	  
     approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
-    console.log({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);	  
     setTimeout(function(){	  
-      console.log({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});	    
       sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});
-    },2000);	    
+    },5000);	    
   });    
 }
 
