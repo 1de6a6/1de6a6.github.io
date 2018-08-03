@@ -299,8 +299,6 @@ async function initButtonClick() {
        sellAmountETH = tradeAmount.multipliedBy(sellPrice),
        $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
        $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
-       console.log("sell ",{userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
-			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(new BigNumber(tradeAmount)))});
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(new BigNumber(tradeAmount)))}),
       $('.ui.basic.modal.two').modal('show'));
