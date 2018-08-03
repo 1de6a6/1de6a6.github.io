@@ -235,7 +235,9 @@ async function initBuyClickListener(tx) {
 async function initSellClickListener(obj) {
   $('#sendSell').on('click', async function() { 	  	  
     approve({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);
+    console.log({from:obj.userAddress,to:obj.tradedTokenAddress,value:obj.tradeAmount},obj.contractAddress);	  
     setTimeout(function(){	  
+      console.log({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});	    
       sellTokens({from:obj.userAddress,to:obj.contractAddress,value:obj.tradeAmount});
     },2000);	    
   });    
@@ -299,6 +301,8 @@ async function initButtonClick() {
        sellAmountETH = tradeAmount.multipliedBy(sellPrice),
        $('#tokenAmount').text((parseFloat(sellAmountETH)/1e18).toString()),
        $('#sellPrice').text("Price: " + (parseFloat(sellPrice)*Math.pow(10,tokenDecimals-18)).toString()),
+       console.log("sell ",{userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
+			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(new BigNumber(tradeAmount)))});
        await initSellClickListener({userAddress:userAddress, tradedTokenAddress:tradedTokenAddress,
 			           contractAddress:contractAddress, tradeAmount:toFixed(parseFloat(new BigNumber(tradeAmount)))}),
       $('.ui.basic.modal.two').modal('show'));
