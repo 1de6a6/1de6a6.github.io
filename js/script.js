@@ -383,7 +383,7 @@ async function loadContractInformation(arr) {
 
 function initLeftTableClickListener() {
   $('.leftTable').on('click', function(e) {
-    window.open("https://etherscan.com/address/" + $(e.currentTarget).attr('address'),"_blank");
+    window.open("https://etherscan.com/token/" + $(e.currentTarget).attr('address'),"_blank");
   });	  
 }
 
