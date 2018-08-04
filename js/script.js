@@ -411,7 +411,7 @@ async function loadSearch() {
   for(let i in internalTxs) {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
-    let name = await getTokenName(tradedTokenAddress).toUpperCase();
+    let name = (await getTokenName(tradedTokenAddress)).toUpperCase();
     localStorage.setItem(name,tradedTokenAddress);	  
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18));
     tokenObject[name] ? tokenObject[name] += ethVolume : (tokenObject[name] = 0, tokenObject[name] += ethVolume);  
