@@ -220,7 +220,6 @@ function initSearchClickListener() {
 function initTokenTableClickListener() {
   $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
     let title = e.currentTarget.firstChild.innerText;
-    console.log(title);	  
     localStorage.setItem("tradedToken",title);	  
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  	  	  	  
     loadContractInformation(contractsObject[title]); 	  
@@ -412,8 +411,8 @@ async function loadSearch() {
   for(let i in internalTxs) {
     let contractAddress = internalTxs[i].contractAddress;
     let tradedTokenAddress = await getTradedToken(contractAddress);
-    let name = await getTokenName(tradedTokenAddress);
-    localStorage.setItem(name.toUpperCase(),tradedTokenAddress);	  
+    let name = await getTokenName(tradedTokenAddress).toUpperCase();
+    localStorage.setItem(name,tradedTokenAddress);	  
     let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18));
     tokenObject[name] ? tokenObject[name] += ethVolume : (tokenObject[name] = 0, tokenObject[name] += ethVolume);  
     let searchObject = {'title':name};
