@@ -349,6 +349,7 @@ async function loadContractInformation(arr) {
   let query2 = '#main > div.left-container > div > div > table';
   $(query + ' tr:gt(0)').remove();	
   let name = localStorage.getItem("tradedToken");
+  console.log(arr);	
   let mainTradedToken = await getTradedToken(arr[0]);
   let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	  
   $('#amountTokenName').text(name.toUpperCase());	
@@ -395,7 +396,6 @@ function loadTable(object) {
     let tokenAddress = localStorage.getItem(name);	  
     let tokenVolume = object[i];
     let rowHTML = '<tr><td class="leftTable" address="' + tokenAddress + '">' + name.toUpperCase() + "</td><td>" + tokenVolume.toFixed(2) + " ETH</td></tr>";
-    console.log(rowHTML);	  
     $(query).append(rowHTML);   
   }  
   initLeftTableClickListener();	  	
