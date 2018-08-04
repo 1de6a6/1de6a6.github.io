@@ -21,7 +21,6 @@ function sendTransactionData(tx) {
 	window.open("https://etherscan.com/tx/" + val,"_blank");      
     } else {
 	window.location.reload(false);    
-        console.log(err);
     }
   });
 }  
@@ -371,7 +370,7 @@ async function loadContractInformation(arr) {
     + '<div class="ui small input"><input type="number"></div>' + "</td><td>" 
     + '<div class="ui large buttons"> <button class="ui ok button">Buy</button> <div class="or"></div> <button class="ui ok button">Sell</button> </div>'  
     + "</td></tr>";
-    if(!deactivated) {	  
+    if(!deactivated && ethBalance > 0) {	  
       $(query).append(rowHTML);
     }	    
     initEtherscanLink();	  
