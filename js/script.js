@@ -409,16 +409,19 @@ async function loadSearch() {
   let tokenObject = {};
   for(let i in internalTxs) {
     let contractAddress = internalTxs[i].contractAddress;
-    let tradedTokenAddress = await getTradedToken(contractAddress);
-    let name = (await getTokenName(tradedTokenAddress)).toUpperCase();
-    localStorage.setItem(name,tradedTokenAddress);	  
-    let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18));
-    tokenObject[name] ? tokenObject[name] += ethVolume : (tokenObject[name] = 0, tokenObject[name] += ethVolume);  
-    let searchObject = {'title':name};
-    if(!~categoryContent.indexOf(searchObject)) {
-      categoryContent.push(searchObject);
-    }
-    typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
+    let ethBalance = parseInt(await getETHBalance(contractAddress))/1e18;
+    if(ethBalance > 0) {	  
+      let tradedTokenAddress = await getTradedToken(contractAddress);
+      let name = (await getTokenName(tradedTokenAddress)).toUpperCase();
+      localStorage.setItem(name,tradedTokenAddress);	  
+      let ethVolume = ((await get24HourVolumeETH(contractAddress))/Math.pow(10,18));
+      tokenObject[name] ? tokenObject[name] += ethVolume : (tokenObject[name] = 0, tokenObject[name] += ethVolume);  
+      let searchObject = {'title':name};
+      if(!~categoryContent.indexOf(searchObject)) {
+        categoryContent.push(searchObject);
+      }
+      typeof contractsObject[name]  === 'Array' ? contractsObject[name].push(contractAddress) : contractsObject[name] = [contractAddress];
+    }	    
   }
   loadTable(tokenObject);
   initSearch(categoryContent);
