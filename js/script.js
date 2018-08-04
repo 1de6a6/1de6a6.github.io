@@ -220,6 +220,7 @@ function initSearchClickListener() {
 function initTokenTableClickListener() {
   $('#main > div.left-container > div > div > table > tr').on('click', function(e) {
     let title = e.currentTarget.firstChild.innerText;
+    console.log(title);	  
     localStorage.setItem("tradedToken",title);	  
     let contractsObject = JSON.parse(localStorage.getItem('tableInformation'));	  	  	  	  
     loadContractInformation(contractsObject[title]); 	  
@@ -349,7 +350,6 @@ async function loadContractInformation(arr) {
   let query2 = '#main > div.left-container > div > div > table';
   $(query + ' tr:gt(0)').remove();	
   let name = localStorage.getItem("tradedToken");
-  console.log(arr);	
   let mainTradedToken = await getTradedToken(arr[0]);
   let tokenDecimals = parseInt(await getTokenDecimals(mainTradedToken));	  
   $('#amountTokenName').text(name.toUpperCase());	
