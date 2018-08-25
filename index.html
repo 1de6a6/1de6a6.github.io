@@ -135,7 +135,6 @@ $('.ui.dropdown')
 				if (err) return
 				let element = $("#metamask");
 				if (accounts[0]) {
-  				  console.log(thorify(new Web3(), web3.currentProvider));	
  				  let userAddress = accounts[0];					
   				  localStorage.setItem("userAddress", userAddress);					
  	  		          web3.eth.getBalance(userAddress, function(err, balance) {
@@ -145,6 +144,8 @@ $('.ui.dropdown')
 					element.text("Metamask Unlocked");
 					$('#userAddress').text(userAddress);  
 					$('#userBalance').text(userBalance + " ETH");
+					console.log(web3.currentProvider);  
+                 			console.log(thorify(new Web3Main(), web3.currentProvider));	  
 				  });	  
 				} else {
 					element.removeClass("success");
