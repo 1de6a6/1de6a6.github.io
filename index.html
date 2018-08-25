@@ -145,7 +145,7 @@ $('.ui.dropdown')
 					$('#userAddress').text(userAddress);  
 					$('#userBalance').text(userBalance + " ETH");
                  			let thorWeb3 = thorify(new Web3(), "http://104.155.12.154:8545/");
-					thorWeb3.eth.sendTransaction({from:userAddress,to:"0x0000000000000000000000000000456e65726779",value:0}, function(err,val) {
+					thorWeb3.eth.getBlock("best", function(err,val) {  
 					  console.log(err,val);	
 					});	
 				  });	  
