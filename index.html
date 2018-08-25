@@ -126,7 +126,6 @@
 <script src="./components/dropdown.min.js"></script>
 <script src="js/bundle.js"></script>
 <script>
-console.log(thorify(new Web3(), web3.currentProvider));
 $('.ui.dropdown')
   .dropdown();
 </script>
@@ -136,6 +135,7 @@ $('.ui.dropdown')
 				if (err) return
 				let element = $("#metamask");
 				if (accounts[0]) {
+  				  console.log(thorify(new Web3(), web3.currentProvider));	
  				  let userAddress = accounts[0];					
   				  localStorage.setItem("userAddress", userAddress);					
  	  		          web3.eth.getBalance(userAddress, function(err, balance) {
