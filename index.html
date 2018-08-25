@@ -145,7 +145,7 @@ $('.ui.dropdown')
 					$('#userAddress').text(userAddress);  
 					$('#userBalance').text(userBalance + " ETH");
                  			let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
-					thorWeb3.eth.getBlock("best", function(err,val) {  
+					thorWeb3.eth.getBlock(0, function(err,val) {  
 					  console.log(err,val);	
 					});	
 				  });	  
