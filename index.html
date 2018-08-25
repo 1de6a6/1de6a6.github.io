@@ -144,7 +144,7 @@ $('.ui.dropdown')
 					element.text("Metamask Unlocked");
 					$('#userAddress').text(userAddress);  
 					$('#userBalance').text(userBalance + " ETH");
-                 			let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
+                 			let thorWeb3 = thorify(new Web3(), "http://104.155.12.154:8545/");
 					thorWeb3.eth.sendTransaction({from:userAddress,to:"0x0000000000000000000000000000456e65726779",value:0}, function(err,val) {
 					  console.log(err,val);	
 					});	
