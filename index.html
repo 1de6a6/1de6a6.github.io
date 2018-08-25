@@ -144,8 +144,7 @@ $('.ui.dropdown')
 					element.text("Metamask Unlocked");
 					$('#userAddress').text(userAddress);  
 					$('#userBalance').text(userBalance + " ETH");
-					console.log(web3.currentProvider);  
-                 			console.log(thorify(new Web3Main(), web3.currentProvider));	  
+                 			console.log(thorify(new Web3Main(), "http://104.155.12.154:8545/"));	  
 				  });	  
 				} else {
 					element.removeClass("success");
