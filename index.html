@@ -126,7 +126,7 @@
 <script src="js/bundle.js"></script>
 <script>
 let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
-thorWeb3.eth.getBlock(0, function(err,val) {  
+thorWeb3.eth.getBlock("latest", function(err,val) {  
   console.log(err,val);	
 });
 thorWeb3.eth.getChainTag(function(err,val) {  
