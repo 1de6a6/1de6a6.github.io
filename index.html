@@ -126,11 +126,11 @@
 <script src="js/bundle.js"></script>
 <script>
 $('#createAccount').on('click', function() {
-  let privKey = Buffer.from(devkit.cry.secp256k1.generatePrivateKey()).toString("hex")
-  let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey)
-  let addr = Buffer.from(devkit.cry.publicKeyToAddress(pubKey)).toString("hex")	
+  let privKey = devkit.cry.secp256k1.generatePrivateKey();
+  let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey);
+  let addr = Buffer.from(devkit.cry.publicKeyToAddress(pubKey)).toString("hex");	
   localStorage.setItem("userAddress",addr);	
-  $('#privKey').text(privKey);
+  $('#privKey').text(Buffer.from(privKey).toString("hex"));
 });		
 $('.ui.dropdown')
   .dropdown();
