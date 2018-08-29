@@ -125,6 +125,10 @@
 <script src="./components/dropdown.min.js"></script>
 <script src="js/bundle.js"></script>
 <script>
+let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
+thorWeb3.eth.getBlock(0, function(err,val) {  
+  console.log(err,val);	
+});
 $('#createAccount').on('click', function() {
   let privKey = devkit.cry.secp256k1.generatePrivateKey();
   let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey);
