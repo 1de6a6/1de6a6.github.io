@@ -128,7 +128,7 @@
 $('#createAccount').on('click', function() {
   let privKey = devkit.cry.secp256k1.generatePrivateKey();
   let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey);
-  let addr = Buffer.from(devkit.cry.publicKeyToAddress(pubKey)).toString("hex");	
+  let addr = "0x" + Buffer.from(devkit.cry.publicKeyToAddress(pubKey)).toString("hex");	
   $('#privKey').text(Buffer.from(privKey).toString("hex"));
   $('#userAddress').text(addr);
   localStorage.setItem("userAddress",addr);	
