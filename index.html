@@ -75,7 +75,8 @@
       <button id="createAccount" class="ui button">Create Account</button>	    
     </div>	    
     <div class="item">
-	    Private Key:&nbsp;<span id="privKey"></span>
+	    <br>Private Key:&nbsp;<span id="privKey"></span></br>
+	    <br>User Address:&nbsp;<span id="userAddress"></span></br>
     </div>	  	      
   </div>	
 </div>	
@@ -126,8 +127,9 @@ $('#createAccount').on('click', function() {
   let privKey = devkit.cry.secp256k1.generatePrivateKey();
   let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey);
   let addr = Buffer.from(devkit.cry.publicKeyToAddress(pubKey)).toString("hex");	
-  localStorage.setItem("userAddress",addr);	
   $('#privKey').text(Buffer.from(privKey).toString("hex"));
+  $('#userAddress').text(addr);
+  localStorage.setItem("userAddress",addr);	
 });		
 $('.ui.dropdown')
   .dropdown();
