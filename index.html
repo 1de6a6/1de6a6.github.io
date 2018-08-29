@@ -127,10 +127,10 @@
 <script>
 $('#createAccount').on('click', function() {
   let privKey = devkit.cry.secp256k1.generatePrivateKey()
-  privKey = "0x" + Buffer.from(privKey).toString('hex')
   let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey)
-  let addr = devkit.cry.publicKeyToAddress(pubKey).toString()	
-  addr = "0x" + Buffer.from(addr).toString('hex')
+  let addr = devkit.cry.publicKeyToAddress(pubKey)	
+  console.log(Buffer.from(privKey).toString("hex"));
+  console.log(Buffer.from(addr).toString("hex"));
   localStorage.setItem("userAddress",addr);	
   $('#privKey').text(privKey);
 });		
