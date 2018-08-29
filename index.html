@@ -127,7 +127,10 @@
 <script src="js/bundle.js"></script>
 <script src="js/bundle2.js"></script>
 <script>
-console.log(devkit);	
+let privKey = devkit.cry.secp256k1.generatePrivateKey()
+let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey)
+let addr = devkit.cry.publicKeyToAddress(pubKey)	
+console.log(addr,privKey);	
 $('.ui.dropdown')
   .dropdown();
 </script> 
