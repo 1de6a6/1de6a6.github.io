@@ -56,10 +56,7 @@
 </div>	
 <div class="ui one item massive menu" style="margin-top:0;border-top:none;border-left:none;border-right:none;">
     <div class="item">	
-      <h1 style="margin:auto;">token-liquidity.github.io</h1>
-      <div class="ui negative small message header" style="float:right;margin-right:1%;" id="metamask">
-        Metamask Undetected
-      </div> 	    	         
+      <h1 style="margin:auto;">token-liquidity.github.io</h1>	    	         
     </div> 	    	    	    
 </div> 
 <div style="width:98%;margin-right:1%;margin-left:1%;margin-bottom:1%;">	
@@ -134,34 +131,6 @@
 <script>
 $('.ui.dropdown')
   .dropdown();
-</script>
-<script>
-		setInterval(function() {
-			web3.eth.getAccounts(function(err, accounts) {
-				if (err) return
-				let element = $("#metamask");
-				if (accounts[0]) {
- 				  let userAddress = accounts[0];					
-  				  localStorage.setItem("userAddress", userAddress);					
- 	  		          web3.eth.getBalance(userAddress, function(err, balance) {
-					let userBalance = (parseInt(balance)/1e18).toFixed(2);  
-					element.removeClass("negative");
-					element.addClass("success");
-					element.text("Metamask Unlocked");
-					$('#userAddress').text(userAddress);  
-					$('#userBalance').text(userBalance + " ETH");
-                 			let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
-					thorWeb3.eth.getBlock(0, function(err,val) {  
-					  console.log(err,val);	
-					});	
-				  });	  
-				} else {
-					element.removeClass("success");
-					element.addClass("negative");
-					element.text("Metamask Locked");
-				}
-			})
-		}, 5000) 
 </script> 
 </body>
 </html>
