@@ -126,6 +126,12 @@
 <script src="js/bundle.js"></script>
 <script>
 let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
+let userAddress = localStorage.getItem("userAddress");	
+var myContract = new thorWeb3.eth.Contract([...], {
+    from: userAddress,
+    gasPrice: '20000000000'
+});	
+console.log(myContract.deploy().encodeABI());					    
 thorWeb3.eth.getBlock("latest", function(err,val) {  
   console.log(err,val);	
 });
