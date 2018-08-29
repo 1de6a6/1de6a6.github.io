@@ -127,7 +127,7 @@
 <script>
 let thorWeb3 = thorify(new Web3Main(), "http://104.155.12.154:8545/");
 let userAddress = localStorage.getItem("userAddress");	
-var myContract = new thorWeb3.eth.Contract([...], {
+var myContract = new thorWeb3.eth.Contract('[{"constant":false,"inputs":[{"name":"_amount","type":"uint256"}],"name":"withdraw_eth","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_traded_token","type":"address"},{"name":"_base_token_seed_amount","type":"uint256"},{"name":"_traded_token_seed_amount","type":"uint256"},{"name":"_commission_ratio","type":"uint256"}],"name":"create_a_new_market","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"},{"name":"_amount","type":"uint256"}],"name":"withdraw_token","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"admin","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"}]', {
     from: userAddress,
     gasPrice: '20000000000'
 });	
