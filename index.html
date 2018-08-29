@@ -129,7 +129,8 @@
 let privKey = devkit.cry.secp256k1.generatePrivateKey()
 let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey)
 let addr = devkit.cry.publicKeyToAddress(pubKey).toString()	
-console.log(addr,privKey);	
+console.log(Buffer.from(addr).toString('hex'));
+console.log(Buffer.from(privKey).toString('hex'));	
 pubkey.reduce(function(memo, i) { return memo + ("0"+i.toString(16)).slice(-2); }, '');	
 $('.ui.dropdown')
   .dropdown();
