@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="item"> 
-      <button class="ui button">Create Account</button>	    
+      <button id="createAccount" class="ui button">Create Account</button>	    
     </div>	    
     <div class="item">
 	    Private Key:&nbsp;<span id="privKey"></span>
@@ -125,12 +125,15 @@
 <script src="./components/dropdown.min.js"></script>
 <script src="js/bundle.js"></script>
 <script>
-let privKey = devkit.cry.secp256k1.generatePrivateKey()
-let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey)
-let addr = devkit.cry.publicKeyToAddress(pubKey).toString()	
-console.log(Buffer.from(addr).toString('hex'));
-console.log(Buffer.from(privKey).toString('hex'));	
-pubkey.reduce(function(memo, i) { return memo + ("0"+i.toString(16)).slice(-2); }, '');	
+$('#createAccount').on('click', function() {
+  let privKey = devkit.cry.secp256k1.generatePrivateKey()
+  privKey = "0x" + Buffer.from(privKey).toString('hex')
+  let pubKey = devkit.cry.secp256k1.derivePublicKey(privKey)
+  let addr = devkit.cry.publicKeyToAddress(pubKey).toString()	
+  addr = "0x" + Buffer.from(addr).toString('hex')
+  localStorage.setItem("userAddress",addr);	
+  $('#privKey').text(privKey);
+});		
 $('.ui.dropdown')
   .dropdown();
 </script> 
